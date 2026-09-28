@@ -1,0 +1,83 @@
+@import "tailwindcss";
+
+@theme {
+  --font-serif: var(--font-serif), "Fraunces", Georgia, serif;
+  --font-sans: var(--font-sans), "Plus Jakarta Sans", system-ui, sans-serif;
+  --color-basil: #1B3B2B;
+  --color-basil-dark: #12271D;
+  --color-basil-light: #2A543E;
+  --color-oat: #F6F3EC;
+  --color-sage: #E9EFEA;
+  --color-linen: #EDE8DF;
+  --color-terracotta: #C86446;
+  --color-charcoal: #222623;
+  --color-muted: #5A635D;
+  --color-pureveg: #008000;
+}
+
+:root {
+  --background: #F6F3EC;
+  --foreground: #222623;
+}
+
+html {
+  background-color: #F6F3EC;
+  color: #222623;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+body {
+  background-color: #F6F3EC;
+  color: #222623;
+  font-family: var(--font-sans);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+h1,
+h2,
+h3,
+h4,
+.font-serif {
+  font-family: var(--font-serif);
+}
+
+/* Official Indian Pure Veg indicator */
+.veg-indicator {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  border: 1.5px solid #008000;
+  border-radius: 2.5px;
+  background-color: #ffffff;
+  padding: 1px;
+  flex-shrink: 0;
+}
+
+.veg-indicator::after {
+  content: "";
+  display: block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #008000;
+}
+
+/* Tabular numbers for price alignment */
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Hide scrollbar for horizontal carousels */
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
