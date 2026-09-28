@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useCafeState } from "@/context/CafeStateContext";
+import BrandWordmark from "./BrandWordmark";
 
 export function VegIndicator({ className = "" }: { className?: string }) {
   return (
@@ -22,8 +23,8 @@ export default function TopNavbar() {
   return (
     <header className="fixed top-4 left-0 right-0 z-50 mx-auto max-w-6xl px-4">
       <div className="bg-[#F6F3EC]/85 backdrop-blur-md border border-[#1B3B2B]/10 rounded-full px-5 sm:px-6 h-16 flex items-center justify-between shadow-md">
-        {/* Left: Brand with circular masked official logo */}
-        <Link href="/" className="flex items-center gap-3 group">
+        {/* Left: Brand with circular masked official logo and wordmark */}
+        <Link href="/" className="flex items-center gap-2.5 sm:gap-3 group">
           <div className="w-10 h-10 md:w-11 md:h-11 rounded-full overflow-hidden flex-shrink-0 border border-[#1B3B2B]/15 shadow-sm bg-[#84BE38]">
             <img
               src="/images/logo.jpg"
@@ -31,17 +32,7 @@ export default function TopNavbar() {
               className="w-full h-full object-cover scale-[1.05]"
             />
           </div>
-          <div className="flex flex-col">
-            <span
-              className="font-bold text-lg md:text-xl text-[#1B3B2B] tracking-tight leading-none group-hover:text-[#2a543f] transition-colors"
-              style={{ fontFamily: "var(--font-serif)" }}
-            >
-              The Basil
-            </span>
-            <span className="text-[9px] tracking-[0.25em] text-[#5A635D] block -mt-0.5 uppercase font-medium">
-              Cafe &amp; Restro
-            </span>
-          </div>
+          <BrandWordmark variant="dark" className="h-8 sm:h-9 w-auto" />
         </Link>
 
         {/* Center: Desktop nav */}

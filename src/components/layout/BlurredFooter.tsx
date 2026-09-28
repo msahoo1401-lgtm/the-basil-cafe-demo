@@ -2,6 +2,7 @@
 
 import { INTERIOR_IMAGES } from "@/data/cafeData";
 import { useCafeState } from "@/context/CafeStateContext";
+import BrandWordmark from "./BrandWordmark";
 
 export default function BlurredFooter() {
   const { isOwnerMode, setLoginModalOpen, logoutOwnerMode } = useCafeState();
@@ -28,12 +29,9 @@ export default function BlurredFooter() {
           />
         </div>
 
-        <h2
-          className="text-4xl md:text-6xl font-semibold text-[#F6F3EC] mb-3 italic tracking-tight"
-          style={{ fontFamily: "var(--font-serif)" }}
-        >
-          The Basil
-        </h2>
+        <div className="mb-4">
+          <BrandWordmark variant="light" className="h-10 sm:h-14 w-auto" />
+        </div>
         <p className="text-sm md:text-base text-[#F6F3EC]/85 mb-8">
           Crafted with warmth &amp; freshly brewed coffee in Bhubaneswar.
         </p>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import BrandWordmark from "./BrandWordmark";
 
 export default function PageLoader() {
   const [isSliding, setIsSliding] = useState(false);
@@ -42,9 +43,10 @@ export default function PageLoader() {
       </div>
 
       {/* Brand title & location */}
-      <div className="mt-5 text-center">
-        <p className="text-xs sm:text-sm tracking-[0.3em] uppercase text-[#F6F3EC]/90 font-medium font-sans">
-          THE BASIL &bull; KALINGANAGAR
+      <div className="mt-5 flex flex-col items-center">
+        <BrandWordmark variant="light" className="h-8 sm:h-10 w-auto mb-2" />
+        <p className="text-[10px] sm:text-xs tracking-[0.3em] uppercase text-[#F6F3EC]/80 font-medium font-sans">
+          KALINGANAGAR &bull; BHUBANESWAR
         </p>
       </div>
     </div>

@@ -1,6 +1,7 @@
 "use client";
 
 import { INTERIOR_IMAGES, CAFE_INFO } from "@/data/cafeData";
+import BrandWordmark from "@/components/layout/BrandWordmark";
 
 export default function LocationAndHoursSection() {
   return (
@@ -16,12 +17,9 @@ export default function LocationAndHoursSection() {
             />
           </div>
           <div>
-            <h3
-              className="text-2xl md:text-3xl font-bold text-[#1B3B2B] mb-1 tracking-tight"
-              style={{ fontFamily: "var(--font-serif)" }}
-            >
-              THE BASIL CAFE &amp; RESTRO
-            </h3>
+            <div className="mb-2">
+              <BrandWordmark variant="dark" className="h-8 sm:h-9 w-auto" />
+            </div>
             <p className="text-sm text-[#5A635D] leading-relaxed">
               {CAFE_INFO.address}, Odisha
             </p>

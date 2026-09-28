@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import TopNavbar from "@/components/layout/TopNavbar";
+import BrandWordmark from "@/components/layout/BrandWordmark";
 import StaffAdminBar from "@/components/layout/StaffAdminBar";
 import BlurredFooter from "@/components/layout/BlurredFooter";
 import WhatsAppBookingModal from "@/components/modals/WhatsAppBookingModal";
@@ -86,10 +86,56 @@ export default function SpacePage() {
   return (
     <div className="min-h-screen bg-[#F6F3EC] text-[#222623]">
       <StaffAdminBar />
-      <TopNavbar />
+
+      {/* Top Header Bar matching /menu */}
+      <header className="sticky top-0 z-40 bg-[#F6F3EC]/90 backdrop-blur-md border-b border-[#1B3B2B]/10">
+        <div className="max-w-6xl mx-auto px-4 h-18 sm:h-24 flex items-center justify-between gap-3 sm:gap-4">
+          {/* Left: Interactive pill Back to Home button with animated chevron */}
+          <Link
+            href="/"
+            className="group inline-flex items-center gap-2 px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-full border border-[#1B3B2B]/15 bg-white/70 hover:bg-white text-xs sm:text-sm font-semibold text-[#1B3B2B] hover:text-[#C86446] transition-all shadow-sm"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="w-3.5 h-3.5 sm:w-4 sm:h-4 transform group-hover:-translate-x-1 transition-transform duration-300"
+              aria-hidden
+            >
+              <polyline points="15 18 9 12 15 6" />
+            </svg>
+            <span>Back to Home</span>
+          </Link>
+
+          {/* Center: Enlarged circular emblem logo paired with BrandWordmark */}
+          <Link href="/" className="flex items-center gap-2 sm:gap-3 group">
+            <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full overflow-hidden flex-shrink-0 border border-[#1B3B2B]/15 bg-[#84BE38] shadow-sm group-hover:scale-105 transition-transform duration-300">
+              <img
+                src="/images/logo.jpg"
+                alt="The Basil Cafe & Restro"
+                className="w-full h-full object-cover scale-[1.05]"
+              />
+            </div>
+            <BrandWordmark variant="dark" className="h-8 sm:h-11 w-auto" />
+          </Link>
+
+          {/* Right: Table Reservation CTA */}
+          <div className="flex items-center">
+            <button
+              onClick={() => setBookingModalOpen(true)}
+              className="bg-[#1B3B2B] text-[#F6F3EC] hover:bg-[#2a543f] text-xs sm:text-sm font-semibold px-4 sm:px-5 py-2 sm:py-2.5 rounded-full transition cursor-pointer border-none shadow-sm"
+            >
+              Reserve a Table
+            </button>
+          </div>
+        </div>
+      </header>
 
       {/* Main Page Container */}
-      <main className="pt-28 md:pt-32 pb-20">
+      <main className="pt-8 md:pt-12 pb-20">
         {/* Editorial Intro Banner */}
         <section className="max-w-6xl mx-auto px-4 mb-16 md:mb-24 text-center">
           <ScrollReveal>

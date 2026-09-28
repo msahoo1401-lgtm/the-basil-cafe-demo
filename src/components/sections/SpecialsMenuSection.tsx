@@ -276,13 +276,25 @@ export default function SpecialsMenuSection() {
         })}
       </div>
 
-      {/* Prominent Centered Button linking to /menu */}
-      <div className="text-center mt-8">
+      {/* Prominent Centered Button linking to /menu with interactive hover & animated right chevron */}
+      <div className="text-center mt-10">
         <Link
           href="/menu"
-          className="inline-flex items-center bg-[#1B3B2B] text-[#F6F3EC] px-8 py-3.5 rounded-full text-sm font-semibold hover:bg-[#2a543f] transition shadow-md"
+          className="group inline-flex items-center gap-2.5 bg-[#FAF7F2] hover:bg-[#1B3B2B] text-[#1B3B2B] hover:text-[#F6F3EC] border border-[#1B3B2B]/20 hover:border-[#1B3B2B] px-8 py-4 rounded-full text-sm font-semibold transition-all duration-300 shadow-sm hover:shadow-lg cursor-pointer"
         >
-          View Full Menu
+          <span>View Full Menu</span>
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="w-4 h-4 transform group-hover:translate-x-1.5 transition-transform duration-300"
+            aria-hidden
+          >
+            <polyline points="9 18 15 12 9 6" />
+          </svg>
         </Link>
       </div>
 
