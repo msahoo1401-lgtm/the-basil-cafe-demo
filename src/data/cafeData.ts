@@ -10,6 +10,7 @@ export interface MenuItem {
   isVegan: boolean;
   isBestseller: boolean;
   inStock: boolean;
+  tags: string[];
 }
 
 export interface Workshop {
@@ -87,6 +88,7 @@ export const INITIAL_MENU: MenuItem[] = [
     isVegan: false,
     isBestseller: false,
     inStock: true,
+    tags: ["Bestseller", "Barista Choice"],
   },
   {
     id: "creamy-mushroom-pasta",
@@ -99,6 +101,7 @@ export const INITIAL_MENU: MenuItem[] = [
     isVegan: false,
     isBestseller: true,
     inStock: true,
+    tags: ["Bestseller", "Most Liked"],
   },
   {
     id: "margherita-pizza",
@@ -111,6 +114,7 @@ export const INITIAL_MENU: MenuItem[] = [
     isVegan: false,
     isBestseller: true,
     inStock: true,
+    tags: ["Bestseller", "Wood-Fired"],
   },
   {
     id: "crispy-french-fries",
@@ -123,6 +127,7 @@ export const INITIAL_MENU: MenuItem[] = [
     isVegan: true,
     isBestseller: false,
     inStock: true,
+    tags: ["Vegan", "Quick Bite"],
   },
   {
     id: "mushroom-stroganoff",
@@ -135,6 +140,7 @@ export const INITIAL_MENU: MenuItem[] = [
     isVegan: false,
     isBestseller: true,
     inStock: true,
+    tags: ["Bestseller", "Chef's Special"],
   },
   {
     id: "grilled-veg-sandwich",
@@ -147,6 +153,7 @@ export const INITIAL_MENU: MenuItem[] = [
     isVegan: false,
     isBestseller: false,
     inStock: true,
+    tags: ["Most Liked", "Comfort Food"],
   },
   {
     id: "tofu-veg-maki",
@@ -159,6 +166,7 @@ export const INITIAL_MENU: MenuItem[] = [
     isVegan: true,
     isBestseller: false,
     inStock: true,
+    tags: ["Vegan", "Chef's Special"],
   },
   {
     id: "hot-chocolate",
@@ -171,6 +179,7 @@ export const INITIAL_MENU: MenuItem[] = [
     isVegan: false,
     isBestseller: false,
     inStock: true,
+    tags: ["Most Liked", "Sweet Tooth"],
   },
   {
     id: "cold-brew",
@@ -183,6 +192,7 @@ export const INITIAL_MENU: MenuItem[] = [
     isVegan: true,
     isBestseller: true,
     inStock: true,
+    tags: ["Bestseller", "Vegan", "18-Hour Steep"],
   },
   {
     id: "garlic-bread",
@@ -194,6 +204,7 @@ export const INITIAL_MENU: MenuItem[] = [
     isVegan: false,
     isBestseller: false,
     inStock: true,
+    tags: ["Most Liked", "Starter"],
   },
   {
     id: "pesto-pasta",
@@ -205,6 +216,7 @@ export const INITIAL_MENU: MenuItem[] = [
     isVegan: false,
     isBestseller: false,
     inStock: true,
+    tags: ["Chef's Special", "Herb Garden"],
   },
   {
     id: "veg-burger",
@@ -216,6 +228,7 @@ export const INITIAL_MENU: MenuItem[] = [
     isVegan: false,
     isBestseller: false,
     inStock: true,
+    tags: ["Most Liked"],
   },
   {
     id: "walnut-brownie",
@@ -224,9 +237,11 @@ export const INITIAL_MENU: MenuItem[] = [
     price: 220,
     description:
       "Dense Belgian dark chocolate fudge brownie with roasted walnuts, served warm with Madagascar vanilla bean gelato.",
+    image: "/images/foodings/meal.png",
     isVegan: false,
     isBestseller: true,
     inStock: true,
+    tags: ["Bestseller", "Hot Dessert"],
   },
   {
     id: "herbal-tea",
@@ -235,9 +250,11 @@ export const INITIAL_MENU: MenuItem[] = [
     price: 150,
     description:
       "Whole Egyptian chamomile flowers blended with dried spearmint and lemongrass, served hot in an infusion pot with wild raw honey on the side.",
+    image: "/images/foodings/coffee.png",
     isVegan: true,
     isBestseller: false,
     inStock: true,
+    tags: ["Vegan", "Caffeine-Free"],
   },
 ];
 

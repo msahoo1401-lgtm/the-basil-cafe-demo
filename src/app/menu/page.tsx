@@ -5,7 +5,11 @@ import Link from "next/link";
 import { useCafeState } from "@/context/CafeStateContext";
 import { MenuItem, MenuCategory } from "@/data/cafeData";
 import WhatsAppBookingModal from "@/components/modals/WhatsAppBookingModal";
+import StaffLoginModal from "@/components/modals/StaffLoginModal";
+import AddDishModal from "@/components/modals/AddDishModal";
+import StaffAdminBar from "@/components/layout/StaffAdminBar";
 import BlurredFooter from "@/components/layout/BlurredFooter";
+import OrderAndDineBanner from "@/components/sections/OrderAndDineBanner";
 
 type FilterTab = "all" | MenuCategory | "coffee-beverages" | "mains" | "small-plates" | "desserts";
 
@@ -17,17 +21,35 @@ const FILTER_TABS: { id: FilterTab; label: string }[] = [
   { id: "desserts", label: "Desserts" },
 ];
 
+const PRESET_TAGS = ["Bestseller", "Most Liked", "Chef's Special", "Vegan"];
+
 function PushMenuCard({
   item,
   isOwnerMode,
   toggleItemStock,
   updateItemPrice,
+  removeMenuItem,
+  toggleItemTag,
+  addCustomTag,
 }: {
   item: MenuItem;
   isOwnerMode: boolean;
   toggleItemStock: (id: string) => void;
   updateItemPrice: (id: string, newPrice: number) => void;
+  removeMenuItem: (id: string) => void;
+  toggleItemTag: (id: string, tag: string) => void;
+  addCustomTag: (id: string, customTag: string) => void;
 }) {
+  const [customTagInput, setCustomTagInput] = useState("");
+  const itemTags = item.tags || [];
+
+  function handleAddTag() {
+    if (customTagInput.trim()) {
+      addCustomTag(item.id, customTagInput.trim());
+      setCustomTagInput("");
+    }
+  }
+
   return (
     <div className="w-[270px] sm:w-[300px] hover:w-[340px] sm:hover:w-[380px] flex-shrink-0 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-2 hover:shadow-xl bg-[#FAF7F2] rounded-2xl overflow-hidden border border-[#1B3B2B]/10 cursor-pointer flex flex-col group">
       {/* 1. Top Image */}
@@ -50,25 +72,32 @@ function PushMenuCard({
         )}
 
         {!item.inStock && (
-          <div className="absolute top-3 right-3 bg-red-100 text-red-800 text-xs font-semibold px-2.5 py-1 rounded-full border border-red-200 shadow-sm">
+          <div className="absolute top-3 right-3 bg-red-100 text-red-800 text-xs font-semibold px-2.5 py-1 rounded-full border border-red-200 shadow-sm z-10">
             Sold Out Today
           </div>
         )}
 
-        {item.isBestseller && item.inStock && (
-          <div className="absolute top-3 left-3 bg-[#C86446]/90 text-white text-[10px] uppercase tracking-wider font-bold px-2 py-0.5 rounded-full shadow-sm">
-            Bestseller
-          </div>
-        )}
-        {item.isVegan && (
-          <div
-            className={`absolute ${
-              item.isBestseller && item.inStock ? "top-9 left-3" : "top-3 left-3"
-            } bg-[#E9EFEA]/90 backdrop-blur-sm text-[#1B3B2B] text-[10px] uppercase tracking-wider font-bold px-2 py-0.5 rounded-full border border-[#1B3B2B]/10`}
-          >
-            Vegan
-          </div>
-        )}
+        {/* Refined Tag Badges */}
+        <div className="absolute top-3 left-3 flex flex-wrap gap-1 max-w-[75%] z-10">
+          {itemTags.map((tag) => {
+            const isBestseller = tag === "Bestseller";
+            const isMostLiked = tag === "Most Liked";
+            return (
+              <span
+                key={tag}
+                className={`text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm ${
+                  isBestseller
+                    ? "bg-[#C86446] text-white"
+                    : isMostLiked
+                    ? "bg-[#1B3B2B] text-[#F6F3EC]"
+                    : "bg-[#E9EFEA] text-[#1B3B2B] border border-[#1B3B2B]/15"
+                }`}
+              >
+                {tag}
+              </span>
+            );
+          })}
+        </div>
       </div>
 
       {/* 2. Card Body */}
@@ -91,36 +120,120 @@ function PushMenuCard({
           &#x20B9;{item.price}
         </div>
 
-        {/* Owner Admin Controls */}
+        {/* Expanded Staff Editor Panel */}
         {isOwnerMode && (
-          <div className="mt-3 pt-3 border-t border-[#1B3B2B]/10 flex items-center justify-between gap-2 text-xs">
-            <button
-              type="button"
-              onClick={(e) => {
-                e.stopPropagation();
-                toggleItemStock(item.id);
-              }}
-              className={`px-2.5 py-1 rounded-full font-semibold border transition cursor-pointer ${
-                item.inStock
-                  ? "bg-[#E9EFEA] text-[#1B3B2B] border-[#1B3B2B]/20"
-                  : "bg-red-50 text-red-700 border-red-200"
-              }`}
-            >
-              {item.inStock ? "In Stock" : "Sold Out"}
-            </button>
-            <div
-              className="flex items-center gap-1"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <span className="font-semibold text-[#1B3B2B]">&#x20B9;</span>
+          <div
+            className="mt-3 pt-3 border-t border-[#1B3B2B]/15 flex flex-col gap-2.5 text-xs text-left"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* 1. Stock & Price Row + Delete Dish */}
+            <div className="flex items-center justify-between gap-1.5">
+              <button
+                type="button"
+                onClick={() => toggleItemStock(item.id)}
+                className={`px-2.5 py-1 rounded-full font-semibold border transition cursor-pointer ${
+                  item.inStock
+                    ? "bg-[#E9EFEA] text-[#1B3B2B] border-[#1B3B2B]/20"
+                    : "bg-red-50 text-red-700 border-red-200"
+                }`}
+              >
+                {item.inStock ? "In Stock" : "Sold Out"}
+              </button>
+
+              <div className="flex items-center gap-1">
+                <span className="font-semibold text-[#1B3B2B]">&#x20B9;</span>
+                <input
+                  type="number"
+                  value={item.price}
+                  min={0}
+                  step={5}
+                  onChange={(e) => updateItemPrice(item.id, Number(e.target.value))}
+                  className="w-14 rounded border border-[#1B3B2B]/20 bg-white text-center font-bold text-xs py-0.5 tabular-nums focus:outline-none focus:border-[#C86446]"
+                />
+              </div>
+
+              <button
+                type="button"
+                onClick={() => removeMenuItem(item.id)}
+                title="Remove dish"
+                className="w-7 h-7 rounded-full bg-red-100 hover:bg-red-200 text-red-700 flex items-center justify-center transition cursor-pointer border-none"
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-3.5 h-3.5">
+                  <path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+                </svg>
+              </button>
+            </div>
+
+            {/* 2. Tag Preset Quick-Toggles */}
+            <div className="flex flex-wrap gap-1 pt-1">
+              {PRESET_TAGS.map((tag) => {
+                const hasTag = itemTags.includes(tag);
+                return (
+                  <button
+                    type="button"
+                    key={tag}
+                    onClick={() => toggleItemTag(item.id, tag)}
+                    className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold border transition cursor-pointer ${
+                      hasTag
+                        ? "bg-[#1B3B2B] text-white border-[#1B3B2B]"
+                        : "bg-white text-[#5A635D] border-[#1B3B2B]/20 hover:border-[#1B3B2B]/40"
+                    }`}
+                  >
+                    {hasTag ? (
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" className="w-2.5 h-2.5">
+                        <polyline points="20 6 9 17 4 12" />
+                      </svg>
+                    ) : (
+                      <span>+</span>
+                    )}
+                    <span>{tag}</span>
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* 3. Active Custom Tags with remove button & Inline Add Input */}
+            <div className="flex flex-wrap gap-1">
+              {itemTags
+                .filter((t) => !PRESET_TAGS.includes(t))
+                .map((customT) => (
+                  <span
+                    key={customT}
+                    className="inline-flex items-center gap-1 bg-[#E9EFEA] text-[#1B3B2B] border border-[#1B3B2B]/15 px-2 py-0.5 rounded-full text-[10px] font-medium"
+                  >
+                    <span>{customT}</span>
+                    <button
+                      type="button"
+                      onClick={() => toggleItemTag(item.id, customT)}
+                      className="text-[#5A635D] hover:text-red-700 font-bold ml-0.5 bg-transparent border-none cursor-pointer p-0"
+                    >
+                      &times;
+                    </button>
+                  </span>
+                ))}
+            </div>
+
+            <div className="flex items-center gap-1 pt-0.5">
               <input
-                type="number"
-                value={item.price}
-                min={0}
-                step={5}
-                onChange={(e) => updateItemPrice(item.id, Number(e.target.value))}
-                className="w-16 rounded border border-[#1B3B2B]/20 bg-white text-center font-bold text-xs py-0.5 tabular-nums focus:outline-none focus:border-[#C86446]"
+                type="text"
+                placeholder="+ Add custom tag..."
+                value={customTagInput}
+                onChange={(e) => setCustomTagInput(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault();
+                    handleAddTag();
+                  }
+                }}
+                className="flex-1 px-2 py-1 rounded-lg border border-[#1B3B2B]/20 bg-white text-xs text-[#222623] focus:outline-none"
               />
+              <button
+                type="button"
+                onClick={handleAddTag}
+                className="bg-[#1B3B2B] text-white px-2.5 py-1 rounded-lg text-[10px] font-semibold hover:bg-[#2a543f] transition border-none cursor-pointer"
+              >
+                Add
+              </button>
             </div>
           </div>
         )}
@@ -133,9 +246,14 @@ export default function MenuPage() {
   const {
     menuItems,
     isOwnerMode,
-    setIsOwnerMode,
+    setLoginModalOpen,
+    logoutOwnerMode,
     toggleItemStock,
     updateItemPrice,
+    removeMenuItem,
+    toggleItemTag,
+    addCustomTag,
+    setAddDishModalOpen,
     setBookingModalOpen,
   } = useCafeState();
 
@@ -153,7 +271,7 @@ export default function MenuPage() {
       {
         id: "mains",
         title: "Pastas, Wood-Fired Pizzas & Mains",
-        subtitle: "Slow-simmered mushroom sauces, hand-stretched crusts, and warm herb rice",
+        subtitle: "Slow-simmered mushroom sauces, hand-stretched crusts, and warm parsley rice",
         filter: (i) => i.category === "mains",
       },
       {
@@ -178,6 +296,9 @@ export default function MenuPage() {
 
   return (
     <div className="min-h-screen bg-[#F6F3EC] text-[#222623]">
+      {/* Sticky Staff Admin Bar when logged in */}
+      <StaffAdminBar />
+
       {/* Top Header Bar */}
       <header className="sticky top-0 z-40 bg-[#F6F3EC]/90 backdrop-blur-md border-b border-[#1B3B2B]/10">
         <div className="max-w-6xl mx-auto px-4 h-16 sm:h-20 flex items-center justify-between gap-4">
@@ -226,7 +347,13 @@ export default function MenuPage() {
           {/* Right Header Buttons */}
           <div className="flex items-center gap-2">
             <button
-              onClick={() => setIsOwnerMode((prev) => !prev)}
+              onClick={() => {
+                if (isOwnerMode) {
+                  logoutOwnerMode();
+                } else {
+                  setLoginModalOpen(true);
+                }
+              }}
               className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold border transition cursor-pointer ${
                 isOwnerMode
                   ? "bg-[#C86446] text-white border-[#C86446]"
@@ -246,7 +373,7 @@ export default function MenuPage() {
                 <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
                 <path d="M7 11V7a5 5 0 0 1 10 0v4" />
               </svg>
-              <span>{isOwnerMode ? "Owner Active" : "Staff Portal"}</span>
+              <span>{isOwnerMode ? "Lock Portal" : "Staff Portal"}</span>
             </button>
             <button
               onClick={() => setBookingModalOpen(true)}
@@ -261,7 +388,7 @@ export default function MenuPage() {
       {/* Main Container */}
       <main className="max-w-6xl mx-auto px-4 pt-8 md:pt-12 pb-24">
         {/* Title */}
-        <div className="text-center max-w-2xl mx-auto mb-8">
+        <div className="text-center max-w-2xl mx-auto mb-6">
           <p className="text-xs uppercase tracking-[0.25em] text-[#C86446] font-semibold mb-2">
             100% PURE VEGETARIAN &amp; VEGAN KITCHEN
           </p>
@@ -272,16 +399,25 @@ export default function MenuPage() {
             Freshly Prepared Everyday
           </h1>
           <p className="text-sm text-[#5A635D] leading-relaxed">
-            Hover over any dish to see adjacent cards push aside. All 14 items are prepared fresh to order in our Kalinganagar kitchen.
+            Hover over any dish to see adjacent cards push aside. All items are prepared fresh to order in our Kalinganagar kitchen.
           </p>
-        </div>
 
-        {/* Live Admin Notification */}
-        {isOwnerMode && (
-          <div className="mb-8 p-3 rounded-2xl bg-[#C86446]/10 border border-[#C86446]/30 text-[#C86446] text-xs sm:text-sm font-medium text-center">
-            Staff Portal Active: Click &ldquo;In Stock / Sold Out&rdquo; or edit price directly on any card below to simulate live menu updates.
-          </div>
-        )}
+          {/* Add New Menu Item button when staff logged in */}
+          {isOwnerMode && (
+            <div className="mt-5">
+              <button
+                onClick={() => setAddDishModalOpen(true)}
+                className="inline-flex items-center gap-2 bg-[#C86446] hover:bg-[#b55539] text-white px-6 py-2.5 rounded-full text-xs font-semibold shadow-sm transition cursor-pointer border-none"
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="w-4 h-4">
+                  <line x1="12" y1="5" x2="12" y2="19" />
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                </svg>
+                <span>+ Add New Menu Item</span>
+              </button>
+            </div>
+          )}
+        </div>
 
         {/* Category Filter Pills */}
         <div className="flex items-center gap-2 overflow-x-auto pb-3 mb-10 scrollbar-none">
@@ -345,6 +481,9 @@ export default function MenuPage() {
                       isOwnerMode={isOwnerMode}
                       toggleItemStock={toggleItemStock}
                       updateItemPrice={updateItemPrice}
+                      removeMenuItem={removeMenuItem}
+                      toggleItemTag={toggleItemTag}
+                      addCustomTag={addCustomTag}
                     />
                   ))}
                 </div>
@@ -353,25 +492,14 @@ export default function MenuPage() {
           })}
         </div>
 
-        {/* Footer Order Note */}
-        <div className="mt-16 p-6 sm:p-8 rounded-3xl bg-[#EDE8DF] border border-[#1B3B2B]/10 text-center text-sm text-[#5A635D] max-w-2xl mx-auto">
-          <p className="font-semibold text-base text-[#1B3B2B] mb-2">
-            Home Delivery or Table Booking
-          </p>
-          <p className="leading-relaxed mb-4">
-            Find The Basil Cafe &amp; Restro on Swiggy and Zomato in Bhubaneswar, or reserve your table directly via WhatsApp with zero booking fees.
-          </p>
-          <button
-            onClick={() => setBookingModalOpen(true)}
-            className="inline-flex items-center bg-[#1B3B2B] text-[#F6F3EC] hover:bg-[#2a543f] px-6 py-2.5 rounded-full text-xs font-semibold transition"
-          >
-            Book Table via WhatsApp
-          </button>
-        </div>
+        {/* Reusable Swiggy, Zomato & Dine-In Booking Banner */}
+        <OrderAndDineBanner />
       </main>
 
       <BlurredFooter />
       <WhatsAppBookingModal />
+      <StaffLoginModal />
+      <AddDishModal />
     </div>
   );
 }

@@ -2,8 +2,11 @@
 
 import Link from "next/link";
 import TopNavbar from "@/components/layout/TopNavbar";
+import StaffAdminBar from "@/components/layout/StaffAdminBar";
 import BlurredFooter from "@/components/layout/BlurredFooter";
 import WhatsAppBookingModal from "@/components/modals/WhatsAppBookingModal";
+import StaffLoginModal from "@/components/modals/StaffLoginModal";
+import AddDishModal from "@/components/modals/AddDishModal";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 import { INTERIOR_IMAGES, CAFE_INFO } from "@/data/cafeData";
 import { useCafeState } from "@/context/CafeStateContext";
@@ -82,6 +85,7 @@ export default function SpacePage() {
 
   return (
     <div className="min-h-screen bg-[#F6F3EC] text-[#222623]">
+      <StaffAdminBar />
       <TopNavbar />
 
       {/* Main Page Container */}
@@ -300,6 +304,8 @@ export default function SpacePage() {
 
       <BlurredFooter />
       <WhatsAppBookingModal />
+      <StaffLoginModal />
+      <AddDishModal />
     </div>
   );
 }

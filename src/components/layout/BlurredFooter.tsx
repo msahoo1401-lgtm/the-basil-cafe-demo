@@ -4,7 +4,7 @@ import { INTERIOR_IMAGES } from "@/data/cafeData";
 import { useCafeState } from "@/context/CafeStateContext";
 
 export default function BlurredFooter() {
-  const { isOwnerMode, setIsOwnerMode } = useCafeState();
+  const { isOwnerMode, setLoginModalOpen, logoutOwnerMode } = useCafeState();
 
   return (
     <footer className="relative w-full py-20 md:py-28 overflow-hidden text-center text-[#F6F3EC]">
@@ -42,7 +42,7 @@ export default function BlurredFooter() {
         <div className="flex items-center gap-6 mb-10">
           {/* Instagram */}
           <a
-            href="https://www.instagram.com/thebasilcafeandrestro"
+            href="https://www.instagram.com/the_basilcafeandrestro/"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Instagram"
@@ -138,10 +138,10 @@ export default function BlurredFooter() {
           <span className="hidden sm:inline">|</span>
           <button
             onClick={() => {
-              setIsOwnerMode((prev) => !prev);
-              const specialsEl = document.getElementById("specials");
-              if (specialsEl) {
-                specialsEl.scrollIntoView({ behavior: "smooth" });
+              if (isOwnerMode) {
+                logoutOwnerMode();
+              } else {
+                setLoginModalOpen(true);
               }
             }}
             className="inline-flex items-center gap-1.5 hover:text-[#C86446] transition cursor-pointer border-none bg-transparent p-0 underline decoration-[#F6F3EC]/40 hover:decoration-[#C86446]"
@@ -160,7 +160,7 @@ export default function BlurredFooter() {
               <path d="M7 11V7a5 5 0 0 1 10 0v4" />
             </svg>
             <span>
-              Staff Portal {isOwnerMode ? "(Live Editing Active)" : ""}
+              {isOwnerMode ? "Staff Portal (Click to Lock)" : "Staff Portal"}
             </span>
           </button>
         </div>

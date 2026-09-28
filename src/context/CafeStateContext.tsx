@@ -16,15 +16,24 @@ import {
   INITIAL_WORKSHOP,
 } from "../data/cafeData";
 
-const STORAGE_KEY = "basil_demo_state_v1";
+const STORAGE_KEY = "basil_demo_state_v2";
 
 export interface CafeStateContextType {
   menuItems: MenuItem[];
   workshop: Workshop;
   isOwnerMode: boolean;
   setIsOwnerMode: React.Dispatch<React.SetStateAction<boolean>>;
+  loginModalOpen: boolean;
+  setLoginModalOpen: (open: boolean) => void;
+  addDishModalOpen: boolean;
+  setAddDishModalOpen: (open: boolean) => void;
+  addMenuItem: (newItem: Omit<MenuItem, "id">) => void;
+  removeMenuItem: (id: string) => void;
   toggleItemStock: (id: string) => void;
   updateItemPrice: (id: string, newPrice: number) => void;
+  toggleItemTag: (id: string, tag: string) => void;
+  addCustomTag: (id: string, customTag: string) => void;
+  logoutOwnerMode: () => void;
   updateWorkshop: (updates: Partial<Workshop>) => void;
   resetDemoData: () => void;
   bookingModalOpen: boolean;
@@ -38,6 +47,8 @@ export function CafeStateProvider({ children }: { children: ReactNode }) {
   const [menuItems, setMenuItems] = useState<MenuItem[]>(INITIAL_MENU);
   const [workshop, setWorkshop] = useState<Workshop>(INITIAL_WORKSHOP);
   const [isOwnerMode, setIsOwnerMode] = useState<boolean>(false);
+  const [loginModalOpen, setLoginModalOpen] = useState<boolean>(false);
+  const [addDishModalOpen, setAddDishModalOpen] = useState<boolean>(false);
   const [bookingModalOpen, setBookingModalOpenState] = useState<boolean>(false);
   const [bookingPrefillNote, setBookingPrefillNote] = useState<string>("");
   const [isHydrated, setIsHydrated] = useState<boolean>(false);
@@ -45,11 +56,18 @@ export function CafeStateProvider({ children }: { children: ReactNode }) {
   // Hydrate from localStorage once mounted
   useEffect(() => {
     try {
-      const saved = localStorage.getItem(STORAGE_KEY);
+      const saved = localStorage.getItem(STORAGE_KEY) || localStorage.getItem("basil_demo_state_v1");
       if (saved) {
         const parsed = JSON.parse(saved);
         if (Array.isArray(parsed.menuItems) && parsed.menuItems.length > 0) {
-          setMenuItems(parsed.menuItems);
+          // Ensure all items have a tags array
+          const hydratedItems: MenuItem[] = parsed.menuItems.map((item: Partial<MenuItem>) => ({
+            ...item,
+            tags: Array.isArray(item.tags)
+              ? item.tags
+              : INITIAL_MENU.find((im) => im.id === item.id)?.tags || [],
+          })) as MenuItem[];
+          setMenuItems(hydratedItems);
         }
         if (parsed.workshop && typeof parsed.workshop === "object") {
           setWorkshop(parsed.workshop);
@@ -80,6 +98,20 @@ export function CafeStateProvider({ children }: { children: ReactNode }) {
     }
   }, [menuItems, workshop, isOwnerMode, isHydrated]);
 
+  const addMenuItem = useCallback((newItem: Omit<MenuItem, "id">) => {
+    const id = `dish-${Date.now()}`;
+    const dish: MenuItem = {
+      ...newItem,
+      id,
+      tags: newItem.tags || [],
+    };
+    setMenuItems((prev) => [dish, ...prev]);
+  }, []);
+
+  const removeMenuItem = useCallback((id: string) => {
+    setMenuItems((prev) => prev.filter((item) => item.id !== id));
+  }, []);
+
   const toggleItemStock = useCallback((id: string) => {
     setMenuItems((prev) =>
       prev.map((item) =>
@@ -97,6 +129,46 @@ export function CafeStateProvider({ children }: { children: ReactNode }) {
     );
   }, []);
 
+  const toggleItemTag = useCallback((id: string, tag: string) => {
+    setMenuItems((prev) =>
+      prev.map((item) => {
+        if (item.id !== id) return item;
+        const currentTags = item.tags || [];
+        const exists = currentTags.includes(tag);
+        const newTags = exists
+          ? currentTags.filter((t) => t !== tag)
+          : [...currentTags, tag];
+
+        return {
+          ...item,
+          tags: newTags,
+          isBestseller: tag === "Bestseller" ? !exists : item.isBestseller,
+          isVegan: tag === "Vegan" ? !exists : item.isVegan,
+        };
+      })
+    );
+  }, []);
+
+  const addCustomTag = useCallback((id: string, customTag: string) => {
+    const trimmed = customTag.trim();
+    if (!trimmed) return;
+    setMenuItems((prev) =>
+      prev.map((item) => {
+        if (item.id !== id) return item;
+        const currentTags = item.tags || [];
+        if (currentTags.includes(trimmed)) return item;
+        return {
+          ...item,
+          tags: [...currentTags, trimmed],
+        };
+      })
+    );
+  }, []);
+
+  const logoutOwnerMode = useCallback(() => {
+    setIsOwnerMode(false);
+  }, []);
+
   const updateWorkshop = useCallback((updates: Partial<Workshop>) => {
     setWorkshop((prev) => ({
       ...prev,
@@ -107,12 +179,15 @@ export function CafeStateProvider({ children }: { children: ReactNode }) {
   const resetDemoData = useCallback(() => {
     try {
       localStorage.removeItem(STORAGE_KEY);
+      localStorage.removeItem("basil_demo_state_v1");
     } catch (err) {
       console.error("Failed to reset localStorage state", err);
     }
     setMenuItems(INITIAL_MENU);
     setWorkshop(INITIAL_WORKSHOP);
     setIsOwnerMode(false);
+    setLoginModalOpen(false);
+    setAddDishModalOpen(false);
     setBookingModalOpenState(false);
     setBookingPrefillNote("");
   }, []);
@@ -132,8 +207,17 @@ export function CafeStateProvider({ children }: { children: ReactNode }) {
       workshop,
       isOwnerMode,
       setIsOwnerMode,
+      loginModalOpen,
+      setLoginModalOpen,
+      addDishModalOpen,
+      setAddDishModalOpen,
+      addMenuItem,
+      removeMenuItem,
       toggleItemStock,
       updateItemPrice,
+      toggleItemTag,
+      addCustomTag,
+      logoutOwnerMode,
       updateWorkshop,
       resetDemoData,
       bookingModalOpen,
@@ -144,8 +228,15 @@ export function CafeStateProvider({ children }: { children: ReactNode }) {
       menuItems,
       workshop,
       isOwnerMode,
+      loginModalOpen,
+      addDishModalOpen,
+      addMenuItem,
+      removeMenuItem,
       toggleItemStock,
       updateItemPrice,
+      toggleItemTag,
+      addCustomTag,
+      logoutOwnerMode,
       updateWorkshop,
       resetDemoData,
       bookingModalOpen,
