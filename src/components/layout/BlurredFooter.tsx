@@ -19,6 +19,15 @@ export default function BlurredFooter() {
 
       {/* Centered foreground content */}
       <div className="relative z-10 max-w-3xl mx-auto px-4 flex flex-col items-center">
+        {/* Circular masked official logo */}
+        <div className="w-16 h-16 rounded-full overflow-hidden flex-shrink-0 border border-[#F6F3EC]/20 mb-4 shadow-lg bg-[#84BE38]">
+          <img
+            src="/images/logo.jpg"
+            alt="The Basil Cafe & Restro"
+            className="w-full h-full object-cover scale-[1.05]"
+          />
+        </div>
+
         <h2
           className="text-4xl md:text-6xl font-semibold text-[#F6F3EC] mb-3 italic tracking-tight"
           style={{ fontFamily: "var(--font-serif)" }}
@@ -101,7 +110,7 @@ export default function BlurredFooter() {
 
           {/* Google Maps */}
           <a
-            href="https://maps.app.goo.gl/8rtiiE8igKdkyiGh6"
+            href="https://maps.app.goo.gl/ZXQBdMExMKxirjed9"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Google Maps"

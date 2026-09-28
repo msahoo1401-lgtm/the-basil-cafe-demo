@@ -1,6 +1,5 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
 import Link from "next/link";
 import { useCafeState } from "@/context/CafeStateContext";
 
@@ -16,42 +15,13 @@ const SPECIALS_IDS = new Set([
 
 export default function SpecialsMenuSection() {
   const { menuItems, isOwnerMode, toggleItemStock, updateItemPrice } = useCafeState();
-  const carouselRef = useRef<HTMLDivElement>(null);
-  const [activeIndex, setActiveIndex] = useState(0);
 
   const specialItems = menuItems.filter((item) => SPECIALS_IDS.has(item.id));
-
-  useEffect(() => {
-    const container = carouselRef.current;
-    if (!container) return;
-
-    function handleScroll() {
-      if (!container) return;
-      const firstChild = container.firstElementChild as HTMLElement | null;
-      if (!firstChild) return;
-      const cardWidth = firstChild.offsetWidth;
-      const gap = 24;
-      const idx = Math.round(container.scrollLeft / (cardWidth + gap));
-      setActiveIndex(Math.min(idx, Math.max(0, specialItems.length - 1)));
-    }
-
-    container.addEventListener("scroll", handleScroll, { passive: true });
-    return () => container.removeEventListener("scroll", handleScroll);
-  }, [specialItems.length]);
-
-  function scrollToCard(index: number) {
-    const container = carouselRef.current;
-    if (!container) return;
-    const card = container.children[index] as HTMLElement | undefined;
-    if (card) {
-      container.scrollTo({ left: card.offsetLeft - 16, behavior: "smooth" });
-    }
-  }
 
   return (
     <section id="specials" className="max-w-6xl mx-auto px-4 py-14 md:py-20">
       {/* Centered Header */}
-      <div className="text-center mb-10">
+      <div className="text-center mb-6">
         <p
           className="text-[#C86446] text-lg mb-1 italic"
           style={{ fontFamily: "var(--font-serif)" }}
@@ -64,20 +34,20 @@ export default function SpecialsMenuSection() {
         >
           Discover Our Signature Dishes
         </h2>
+        <p className="text-xs sm:text-sm text-[#5A635D] mt-2 max-w-lg mx-auto">
+          Hover over any card below to preview dish details. Freshly prepared to order.
+        </p>
       </div>
 
-      {/* Horizontal Carousel with compact boxed cards */}
-      <div
-        ref={carouselRef}
-        className="flex gap-6 overflow-x-auto snap-x snap-mandatory pb-6 scrollbar-none"
-      >
+      {/* Flex Row with Physical "Push Adjacent Cards" Hover Effect */}
+      <div className="flex items-stretch gap-5 overflow-x-auto py-6 px-2 scrollbar-none">
         {specialItems.map((item) => (
           <div
             key={item.id}
-            className="w-[280px] sm:w-[320px] md:w-[340px] flex-shrink-0 snap-start group bg-[#FAF7F2] rounded-2xl overflow-hidden shadow-sm border border-[#1B3B2B]/10 flex flex-col hover:shadow-md transition duration-300"
+            className="w-[270px] sm:w-[300px] hover:w-[340px] sm:hover:w-[380px] flex-shrink-0 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-2 hover:shadow-xl bg-[#FAF7F2] rounded-2xl overflow-hidden border border-[#1B3B2B]/10 cursor-pointer flex flex-col group"
           >
-            {/* 1. Top Image with slightly reduced height */}
-            <div className="w-full h-48 sm:h-52 overflow-hidden bg-[#E9EFEA] relative">
+            {/* 1. Top image */}
+            <div className="h-48 sm:h-52 w-full overflow-hidden bg-[#E9EFEA] relative flex-shrink-0">
               {item.image ? (
                 <img
                   src={item.image}
@@ -85,7 +55,7 @@ export default function SpecialsMenuSection() {
                   className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
                 />
               ) : (
-                <div className="w-full h-full flex items-center justify-center bg-[#EDE8DF] text-[#1B3B2B]/40 font-serif text-3xl font-bold">
+                <div className="w-full h-full flex items-center justify-center bg-[#EDE8DF] text-[#1B3B2B]/35 font-serif text-3xl font-bold">
                   {item.name.charAt(0)}
                 </div>
               )}
@@ -102,19 +72,19 @@ export default function SpecialsMenuSection() {
             </div>
 
             {/* 2. Card Body */}
-            <div className="p-5 flex flex-col flex-1 text-center">
+            <div className="flex flex-col flex-1 p-4 pb-5 text-center">
               <h3
-                className="text-lg md:text-xl font-bold text-[#1B3B2B] mb-1.5 leading-snug"
+                className="text-lg md:text-xl font-bold text-[#1B3B2B] text-center mt-1 mb-1.5 leading-snug line-clamp-1"
                 style={{ fontFamily: "var(--font-serif)" }}
               >
                 {item.name}
               </h3>
-              <p className="text-xs sm:text-sm text-[#5A635D] leading-relaxed line-clamp-2 mb-4">
+              <p className="text-xs sm:text-sm text-[#5A635D] text-center line-clamp-2 px-2 mb-3 leading-relaxed">
                 {item.description}
               </p>
 
-              {/* Centered Price at Bottom */}
-              <div className="mt-auto pt-2 text-lg md:text-xl font-bold text-[#C86446] tabular-nums text-center">
+              {/* Price Centered at Bottom */}
+              <div className="mt-auto pt-2 text-lg md:text-xl font-bold text-[#C86446] text-center tabular-nums">
                 &#x20B9;{item.price}
               </div>
 
@@ -122,7 +92,11 @@ export default function SpecialsMenuSection() {
               {isOwnerMode && (
                 <div className="mt-3 pt-3 border-t border-[#1B3B2B]/10 flex items-center justify-between gap-2 text-xs">
                   <button
-                    onClick={() => toggleItemStock(item.id)}
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      toggleItemStock(item.id);
+                    }}
                     className={`px-2.5 py-1 rounded-full font-semibold border transition cursor-pointer ${
                       item.inStock
                         ? "bg-[#E9EFEA] text-[#1B3B2B] border-[#1B3B2B]/20"
@@ -131,7 +105,10 @@ export default function SpecialsMenuSection() {
                   >
                     {item.inStock ? "In Stock" : "Sold Out"}
                   </button>
-                  <div className="flex items-center gap-1">
+                  <div
+                    className="flex items-center gap-1"
+                    onClick={(e) => e.stopPropagation()}
+                  >
                     <span className="font-semibold text-[#1B3B2B]">&#x20B9;</span>
                     <input
                       type="number"
@@ -149,27 +126,11 @@ export default function SpecialsMenuSection() {
         ))}
       </div>
 
-      {/* Dot Indicators */}
-      <div className="flex justify-center gap-2 mt-4">
-        {specialItems.map((item, idx) => (
-          <button
-            key={item.id}
-            onClick={() => scrollToCard(idx)}
-            aria-label={`Go to ${item.name}`}
-            className={`h-2 rounded-full border-none cursor-pointer transition-all duration-300 ${
-              idx === activeIndex
-                ? "bg-[#1B3B2B] w-6"
-                : "bg-[#1B3B2B]/25 w-2 hover:bg-[#1B3B2B]/50"
-            }`}
-          />
-        ))}
-      </div>
-
-      {/* Bottom Centered CTA */}
-      <div className="text-center mt-10">
+      {/* Prominent Centered Button linking to /menu */}
+      <div className="text-center mt-8">
         <Link
           href="/menu"
-          className="inline-flex items-center bg-[#1B3B2B] text-[#F6F3EC] px-8 py-3.5 rounded-full text-sm font-semibold hover:bg-[#2a543f] transition shadow-sm"
+          className="inline-flex items-center bg-[#1B3B2B] text-[#F6F3EC] px-8 py-3.5 rounded-full text-sm font-semibold hover:bg-[#2a543f] transition shadow-md"
         >
           View Full Menu
         </Link>

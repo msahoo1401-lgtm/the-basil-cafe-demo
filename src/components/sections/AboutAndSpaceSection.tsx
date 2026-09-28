@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { INTERIOR_IMAGES } from "@/data/cafeData";
 
 const HIGHLIGHTS = [
@@ -24,15 +25,15 @@ export default function AboutAndSpaceSection() {
             A green, pet-friendly sanctuary built around music and comfort food.
           </h2>
           <p className="text-[#5A635D] text-base leading-relaxed mb-6">
-            Our kitchen is 100% vegetarian and vegan-friendly — every dish, from the mushroom
-            stroganoff to the margherita pizza, is prepared fresh to order. Most weekends include
-            acoustic jam sessions in the singing area and Mandala and Lippan art workshops on the
-            activity floor. Radha and Rani, our two resident dogs, usually roam between the bookshelf
-            corner and the window tables.
+            Our kitchen is 100% vegetarian and vegan-friendly &mdash; every dish, from the mushroom
+            stroganoff to the wood-fired margherita pizza, is prepared fresh to order. Most weekends
+            include acoustic jam sessions in the singing area and Mandala and Lippan art workshops
+            on the activity floor. Radha and Rani, our two resident dogs, usually roam between the
+            bookshelf corner and the sunlit window tables.
           </p>
 
           {/* Highlight pills */}
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-2 mb-6">
             {HIGHLIGHTS.map((label) => (
               <span
                 key={label}
@@ -41,6 +42,29 @@ export default function AboutAndSpaceSection() {
                 {label}
               </span>
             ))}
+          </div>
+
+          {/* Link to dedicated /space page */}
+          <div>
+            <Link
+              href="/space"
+              className="inline-flex items-center gap-2 text-sm font-semibold text-[#1B3B2B] hover:text-[#C86446] transition group"
+            >
+              <span>Explore The Space, Pets &amp; Events</span>
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="w-4 h-4 transform group-hover:translate-x-1 transition-transform"
+                aria-hidden
+              >
+                <line x1="5" y1="12" x2="19" y2="12" />
+                <polyline points="12 5 19 12 12 19" />
+              </svg>
+            </Link>
           </div>
         </div>
 

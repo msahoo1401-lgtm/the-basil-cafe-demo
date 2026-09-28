@@ -41,7 +41,7 @@ export default function MobileBottomDock() {
 
         {/* Maps link */}
         <a
-          href="https://maps.app.goo.gl/8rtiiE8igKdkyiGh6"
+          href="https://maps.app.goo.gl/ZXQBdMExMKxirjed9"
           target="_blank"
           rel="noopener noreferrer"
           className="flex flex-col items-center justify-center gap-1 py-1 rounded-xl text-[#1B3B2B] hover:bg-[#E9EFEA] transition-colors"

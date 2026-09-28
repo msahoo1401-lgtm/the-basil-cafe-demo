@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 
 function GoldStar({ className = "" }: { className?: string }) {
   return (
@@ -23,10 +23,22 @@ function FiveStars({ className = "" }: { className?: string }) {
 function GoogleGIcon({ className = "" }: { className?: string }) {
   return (
     <svg viewBox="0 0 24 24" className={`w-6 h-6 ${className}`} aria-label="Google">
-      <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4" />
-      <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853" />
-      <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05" />
-      <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335" />
+      <path
+        d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"
+        fill="#4285F4"
+      />
+      <path
+        d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+        fill="#34A853"
+      />
+      <path
+        d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
+        fill="#FBBC05"
+      />
+      <path
+        d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
+        fill="#EA4335"
+      />
     </svg>
   );
 }
@@ -92,31 +104,45 @@ const REVIEWS: ReviewData[] = [
 
 export default function ReviewsSection() {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
   const touchStartX = useRef(0);
 
-  function next() {
+  const next = useCallback(() => {
     setCurrentIndex((i) => (i + 1) % REVIEWS.length);
-  }
+  }, []);
 
-  function prev() {
+  const prev = useCallback(() => {
     setCurrentIndex((i) => (i - 1 + REVIEWS.length) % REVIEWS.length);
-  }
+  }, []);
+
+  // Auto-scrolling every 3500ms, paused on hover or touch
+  useEffect(() => {
+    if (isPaused) return;
+    const interval = setInterval(() => {
+      next();
+    }, 3500);
+
+    return () => clearInterval(interval);
+  }, [isPaused, next]);
 
   function handleTouchStart(e: React.TouchEvent) {
+    setIsPaused(true);
     touchStartX.current = e.touches[0].clientX;
   }
 
   function handleTouchEnd(e: React.TouchEvent) {
+    setIsPaused(false);
     const diff = touchStartX.current - e.changedTouches[0].clientX;
     if (Math.abs(diff) > 50) {
-      diff > 0 ? next() : prev();
+      if (diff > 0) next();
+      else prev();
     }
   }
 
   const review = REVIEWS[currentIndex];
 
   return (
-    <section className="max-w-5xl mx-auto px-4 py-16 md:py-24">
+    <section id="reviews" className="max-w-5xl mx-auto px-4 py-16 md:py-24">
       <h2
         className="text-3xl md:text-5xl font-semibold text-center text-[#1B3B2B] mb-10"
         style={{ fontFamily: "var(--font-serif)" }}
@@ -135,7 +161,7 @@ export default function ReviewsSection() {
           </span>
         </div>
         <a
-          href="https://maps.app.goo.gl/8rtiiE8igKdkyiGh6"
+          href="https://maps.app.goo.gl/ZXQBdMExMKxirjed9"
           target="_blank"
           rel="noopener noreferrer"
           className="bg-[#1B3B2B] hover:bg-[#2a543f] text-[#F6F3EC] px-5 py-2.5 rounded-xl text-sm font-semibold transition"
@@ -144,22 +170,34 @@ export default function ReviewsSection() {
         </a>
       </div>
 
-      {/* Review slider */}
-      <div className="relative flex items-center justify-center">
+      {/* Auto-advancing review slider */}
+      <div
+        className="relative flex items-center justify-center"
+        onMouseEnter={() => setIsPaused(true)}
+        onMouseLeave={() => setIsPaused(false)}
+      >
         {/* Left arrow */}
         <button
           onClick={prev}
           aria-label="Previous review"
           className="w-11 h-11 rounded-full bg-white border border-[#1B3B2B]/15 flex items-center justify-center shadow-sm hover:bg-[#E9EFEA] transition cursor-pointer flex-shrink-0"
         >
-          <svg viewBox="0 0 24 24" fill="none" stroke="#1B3B2B" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="#1B3B2B"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="w-5 h-5"
+          >
             <path d="M15 18l-6-6 6-6" />
           </svg>
         </button>
 
-        {/* Review card */}
+        {/* Center Review card with smooth transition */}
         <div
-          className="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-[#1B3B2B]/10 max-w-2xl w-full mx-4 transition-all"
+          className="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-[#1B3B2B]/10 max-w-2xl w-full mx-4 transition-all duration-500 ease-out"
           onTouchStart={handleTouchStart}
           onTouchEnd={handleTouchEnd}
         >
@@ -178,12 +216,12 @@ export default function ReviewsSection() {
           </div>
 
           {/* Review text */}
-          <p className="text-base md:text-lg text-[#222623] my-5 leading-relaxed">
+          <p className="text-base md:text-lg text-[#222623] my-5 leading-relaxed min-h-[4.5rem]">
             &ldquo;{review.text}&rdquo;
           </p>
 
-          {/* Bottom: stars + Google icon */}
-          <div className="flex items-center justify-between">
+          {/* Bottom row: stars + Google icon */}
+          <div className="flex items-center justify-between pt-2">
             <FiveStars />
             <GoogleGIcon />
           </div>
@@ -195,7 +233,15 @@ export default function ReviewsSection() {
           aria-label="Next review"
           className="w-11 h-11 rounded-full bg-white border border-[#1B3B2B]/15 flex items-center justify-center shadow-sm hover:bg-[#E9EFEA] transition cursor-pointer flex-shrink-0"
         >
-          <svg viewBox="0 0 24 24" fill="none" stroke="#1B3B2B" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="#1B3B2B"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="w-5 h-5"
+          >
             <path d="M9 18l6-6-6-6" />
           </svg>
         </button>

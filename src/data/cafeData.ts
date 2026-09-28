@@ -41,6 +41,7 @@ export interface CafeInfo {
   hours: string;
   googleRating: number;
   reviewCount: string;
+  googleMapsUrl: string;
 }
 
 // Maps real filenames inside public/images/interior/
@@ -71,6 +72,7 @@ export const CAFE_INFO: CafeInfo = {
   hours: "Mon–Fri: 10:00 AM – 10:30 PM | Sat–Sun: 8:30 AM – 11:30 PM",
   googleRating: 4.6,
   reviewCount: "600+",
+  googleMapsUrl: "https://maps.app.goo.gl/ZXQBdMExMKxirjed9",
 };
 
 export const INITIAL_MENU: MenuItem[] = [

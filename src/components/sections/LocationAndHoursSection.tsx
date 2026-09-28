@@ -70,7 +70,7 @@ export default function LocationAndHoursSection() {
           {/* Primary Action Button */}
           <div>
             <a
-              href="https://maps.app.goo.gl/8rtiiE8igKdkyiGh6"
+              href="https://maps.app.goo.gl/ZXQBdMExMKxirjed9"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 bg-[#1B3B2B] text-[#F6F3EC] hover:bg-[#2a543f] px-8 py-3.5 rounded-full text-sm font-semibold transition shadow-sm"

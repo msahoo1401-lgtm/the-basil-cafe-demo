@@ -21,12 +21,12 @@ function StarIcon() {
   return (
     <svg
       viewBox="0 0 20 20"
-      className="w-6 h-6 md:w-7 md:h-7 ml-1.5 inline-block -mt-1"
-      aria-label="star rating"
+      className="w-5 h-5 sm:w-6 sm:h-6 ml-1.5 inline-block -mt-1"
+      aria-label="Star rating"
     >
       <path
         d="M10 1.5l2.18 4.41 4.87.71-3.52 3.44.83 4.85L10 12.67l-4.36 2.24.83-4.85L2.95 6.62l4.87-.71L10 1.5z"
-        fill="#D4A520"
+        fill="#F59E0B"
       />
     </svg>
   );
@@ -41,14 +41,14 @@ function CounterCell({
   shouldAnimate: boolean;
   borderClasses: string;
 }) {
-  const [displayValue, setDisplayValue] = useState("0");
+  const [displayValue, setDisplayValue] = useState(data.decimals > 0 ? "0.0" : "0");
   const hasAnimated = useRef(false);
 
   useEffect(() => {
     if (!shouldAnimate || hasAnimated.current) return;
     hasAnimated.current = true;
 
-    const duration = 1500;
+    const duration = 1800; // 1800ms visible count-up animation
     let startTime: number | null = null;
     let frame: number;
 
@@ -56,7 +56,8 @@ function CounterCell({
       if (!startTime) startTime = timestamp;
       const elapsed = timestamp - startTime;
       const progress = Math.min(elapsed / duration, 1);
-      // Ease-out cubic for natural deceleration at the end
+
+      // Ease-out cubic curve for natural smooth deceleration
       const eased = 1 - Math.pow(1 - progress, 3);
       const current = eased * data.target;
 
@@ -66,6 +67,10 @@ function CounterCell({
 
       if (progress < 1) {
         frame = requestAnimationFrame(tick);
+      } else {
+        setDisplayValue(
+          data.decimals > 0 ? data.target.toFixed(data.decimals) : data.target.toString()
+        );
       }
     }
 
@@ -84,7 +89,7 @@ function CounterCell({
         </span>
         {data.suffix && (
           <span
-            className="text-2xl md:text-3xl text-[#C86446] font-semibold"
+            className="text-2xl md:text-3xl text-[#C86446] font-semibold ml-0.5"
             style={{ fontFamily: "var(--font-serif)" }}
           >
             {data.suffix}
@@ -120,7 +125,10 @@ export default function AchievementsSection() {
           observer.disconnect();
         }
       },
-      { threshold: 0.3 }
+      {
+        threshold: 0.1,
+        rootMargin: "0px 0px -40px 0px",
+      }
     );
 
     observer.observe(el);
