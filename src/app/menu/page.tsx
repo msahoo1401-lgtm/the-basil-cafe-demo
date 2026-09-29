@@ -300,11 +300,11 @@ export default function MenuPage() {
 
       {/* Top Header Bar */}
       <header className="sticky top-0 z-40 bg-[#F6F3EC]/90 backdrop-blur-md border-b border-[#1B3B2B]/10">
-        <div className="max-w-6xl mx-auto px-4 h-18 sm:h-24 flex items-center justify-between gap-3 sm:gap-4">
+        <div className="max-w-6xl mx-auto px-3 sm:px-4 h-14 sm:h-20 flex items-center justify-between gap-2 sm:gap-4">
           {/* Left: Interactive pill Back to Home button with animated chevron */}
           <Link
             href="/"
-            className="group inline-flex items-center gap-2 px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-full border border-[#1B3B2B]/15 bg-white/70 hover:bg-white text-xs sm:text-sm font-semibold text-[#1B3B2B] hover:text-[#C86446] transition-all shadow-sm"
+            className="group inline-flex items-center gap-1 sm:gap-2 px-2.5 sm:px-4 py-1.5 sm:py-2.5 rounded-full border border-[#1B3B2B]/15 bg-white/70 hover:bg-white text-xs sm:text-sm font-semibold text-[#1B3B2B] hover:text-[#C86446] transition-all shadow-sm flex-shrink-0 whitespace-nowrap"
           >
             <svg
               viewBox="0 0 24 24"
@@ -318,26 +318,30 @@ export default function MenuPage() {
             >
               <polyline points="15 18 9 12 15 6" />
             </svg>
-            <span>Back to Home</span>
+            <span className="hidden sm:inline">Back to Home</span>
+            <span className="sm:hidden">Home</span>
           </Link>
 
-          {/* Center: Enlarged circular emblem logo paired with BrandWordmark */}
-          <Link href="/" className="flex items-center gap-2 sm:gap-3 group">
-            <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full overflow-hidden flex-shrink-0 border border-[#1B3B2B]/15 bg-[#84BE38] shadow-sm group-hover:scale-105 transition-transform duration-300">
+          {/* Center: Circular emblem logo paired with BrandWordmark */}
+          <Link href="/" className="flex items-center gap-1.5 sm:gap-3 group flex-shrink-0">
+            <div className="w-8 h-8 sm:w-14 sm:h-14 rounded-full overflow-hidden flex-shrink-0 border border-[#1B3B2B]/15 bg-[#84BE38] shadow-sm group-hover:scale-105 transition-transform duration-300">
               <img
                 src="/images/brand_icon.png"
                 alt="The Basil Cafe & Restro"
                 className="w-full h-full object-cover scale-[1.05]"
               />
             </div>
-            <BrandWordmark variant="dark" className="h-8 sm:h-11 w-auto" />
+            <BrandWordmark
+              variant="dark"
+              className="h-6 sm:h-10 w-auto max-w-[100px] sm:max-w-[160px] object-contain"
+            />
           </Link>
 
-          {/* Right: Table Reservation CTA (Staff Portal removed from header) */}
-          <div className="flex items-center">
+          {/* Right: Table Reservation CTA */}
+          <div className="flex items-center flex-shrink-0">
             <button
               onClick={() => setBookingModalOpen(true)}
-              className="bg-[#1B3B2B] text-[#F6F3EC] hover:bg-[#2a543f] text-xs sm:text-sm font-semibold px-4 sm:px-5 py-2 sm:py-2.5 rounded-full transition cursor-pointer border-none shadow-sm"
+              className="bg-[#1B3B2B] text-[#F6F3EC] hover:bg-[#2a543f] text-xs sm:text-sm font-semibold px-3 sm:px-5 py-1.5 sm:py-2.5 rounded-full transition cursor-pointer border-none shadow-sm whitespace-nowrap"
             >
               Reserve
             </button>

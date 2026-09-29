@@ -22,17 +22,20 @@ export default function TopNavbar() {
 
   return (
     <header className="fixed top-4 left-0 right-0 z-50 mx-auto max-w-6xl px-4">
-      <div className="bg-[#F6F3EC]/85 backdrop-blur-md border border-[#1B3B2B]/10 rounded-full px-5 sm:px-6 h-16 flex items-center justify-between shadow-md">
+      <div className="bg-[#F6F3EC]/85 backdrop-blur-md border border-[#1B3B2B]/10 rounded-full px-3 sm:px-6 h-14 sm:h-16 flex items-center justify-between gap-2 shadow-md">
         {/* Left: Brand with circular masked official logo and wordmark */}
-        <Link href="/" className="flex items-center gap-2.5 sm:gap-3 group">
-          <div className="w-10 h-10 md:w-11 md:h-11 rounded-full overflow-hidden flex-shrink-0 border border-[#1B3B2B]/15 shadow-sm bg-[#84BE38]">
+        <Link href="/" className="flex items-center gap-2 sm:gap-3 group flex-shrink-0">
+          <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-full overflow-hidden flex-shrink-0 border border-[#1B3B2B]/15 shadow-sm bg-[#84BE38]">
             <img
               src="/images/brand_icon.png"
               alt="The Basil Cafe & Restro"
               className="w-full h-full object-cover scale-[1.05]"
             />
           </div>
-          <BrandWordmark variant="dark" className="h-8 sm:h-9 w-auto" />
+          <BrandWordmark
+            variant="dark"
+            className="h-6 sm:h-10 w-auto max-w-[110px] sm:max-w-[160px] object-contain"
+          />
         </Link>
 
         {/* Center: Desktop nav */}
@@ -64,26 +67,27 @@ export default function TopNavbar() {
         </nav>
 
         {/* Right CTA & Mobile Toggle */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-1.5 sm:gap-3 flex-shrink-0">
           <button
             onClick={() => setBookingModalOpen(true)}
-            className="bg-[#1B3B2B] text-[#F6F3EC] hover:bg-[#2a543f] text-xs md:text-sm font-medium px-5 py-2.5 rounded-full transition cursor-pointer border-none shadow-sm"
+            className="bg-[#1B3B2B] text-[#F6F3EC] hover:bg-[#2a543f] text-xs sm:text-sm font-medium px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full transition cursor-pointer border-none shadow-sm whitespace-nowrap"
           >
-            Reserve a Table
+            <span className="sm:hidden">Reserve</span>
+            <span className="hidden sm:inline">Reserve a Table</span>
           </button>
           <button
             onClick={() => setMobileMenuOpen((v) => !v)}
-            className="md:hidden relative flex flex-col items-center justify-center w-9 h-9 gap-[7px] bg-transparent border-none cursor-pointer"
+            className="md:hidden relative flex flex-col items-center justify-center w-8 h-8 sm:w-9 sm:h-9 gap-[6px] sm:gap-[7px] bg-transparent border-none cursor-pointer flex-shrink-0"
             aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
           >
             <span
               className={`block w-5 h-[1.5px] bg-[#1B3B2B] rounded-full transition-all duration-300 origin-center ${
-                mobileMenuOpen ? "rotate-45 translate-y-[4.25px]" : ""
+                mobileMenuOpen ? "rotate-45 translate-y-[3.75px] sm:translate-y-[4.25px]" : ""
               }`}
             />
             <span
               className={`block w-5 h-[1.5px] bg-[#1B3B2B] rounded-full transition-all duration-300 origin-center ${
-                mobileMenuOpen ? "-rotate-45 -translate-y-[4.25px]" : ""
+                mobileMenuOpen ? "-rotate-45 -translate-y-[3.75px] sm:-translate-y-[4.25px]" : ""
               }`}
             />
           </button>
