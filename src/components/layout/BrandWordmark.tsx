@@ -11,8 +11,8 @@ export default function BrandWordmark({
 }: BrandWordmarkProps) {
   const filterClass =
     variant === "light"
-      ? "invert hue-rotate-180 mix-blend-screen brightness-110 contrast-125"
-      : "mix-blend-multiply brightness-[0.45] contrast-125";
+      ? "brightness-0 invert opacity-95"
+      : "brightness-[0.45] contrast-125";
 
   return (
     <img
