@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Fraunces, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { CafeStateProvider } from "@/context/CafeStateContext";
+import PageLoader from "@/components/layout/PageLoader";
 
 const fraunces = Fraunces({
   variable: "--font-serif",
@@ -40,7 +41,10 @@ export default function RootLayout({
       className={`${fraunces.variable} ${plusJakartaSans.variable}`}
     >
       <body className="min-h-screen bg-[#F6F3EC] text-[#222623] font-sans antialiased selection:bg-[#1B3B2B]/15 selection:text-[#1B3B2B]">
-        <CafeStateProvider>{children}</CafeStateProvider>
+        <CafeStateProvider>
+          <PageLoader />
+          {children}
+        </CafeStateProvider>
       </body>
     </html>
   );

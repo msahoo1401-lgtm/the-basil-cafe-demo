@@ -29,12 +29,14 @@ export default function PageLoader() {
   return (
     <div
       aria-hidden="true"
-      className={`fixed inset-0 z-[100] bg-[#1B3B2B] flex flex-col items-center justify-center transition-all duration-700 ease-in-out select-none ${
-        isSliding ? "-translate-y-full opacity-0 pointer-events-none" : "translate-y-0 opacity-100"
+      className={`fixed inset-0 w-screen h-screen z-[9999] bg-[#1B3B2B] flex flex-col items-center justify-center transition-all duration-700 ease-in-out select-none ${
+        isSliding
+          ? "-translate-y-full opacity-0 pointer-events-none"
+          : "translate-y-0 opacity-100"
       }`}
     >
-      {/* Pulsing circular masked logo */}
-      <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-full overflow-hidden flex-shrink-0 border border-[#F6F3EC]/20 shadow-2xl animate-pulse">
+      {/* Pulsing circular brand emblem */}
+      <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-full overflow-hidden flex-shrink-0 border border-[#F6F3EC]/20 shadow-2xl bg-[#84BE38] animate-pulse">
         <img
           src="/images/brand_icon.png"
           alt="The Basil Cafe & Restro"
@@ -43,8 +45,8 @@ export default function PageLoader() {
       </div>
 
       {/* Brand title & location */}
-      <div className="mt-5 flex flex-col items-center">
-        <BrandWordmark variant="light" className="h-8 sm:h-10 w-auto mb-2" />
+      <div className="mt-5 flex flex-col items-center text-center">
+        <BrandWordmark variant="light" className="h-9 sm:h-12 w-auto mb-2" />
         <p className="text-[10px] sm:text-xs tracking-[0.3em] uppercase text-[#F6F3EC]/80 font-medium font-sans">
           KALINGANAGAR &bull; BHUBANESWAR
         </p>

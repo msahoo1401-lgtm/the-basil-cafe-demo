@@ -1,4 +1,3 @@
-import PageLoader from "@/components/layout/PageLoader";
 import TopNavbar from "@/components/layout/TopNavbar";
 import StaffAdminBar from "@/components/layout/StaffAdminBar";
 import HeroSection from "@/components/sections/HeroSection";
@@ -16,9 +15,6 @@ import ScrollReveal from "@/components/ui/ScrollReveal";
 export default function Home() {
   return (
     <main className="min-h-screen bg-[#F6F3EC] text-[#222623]">
-      {/* 0.9s Initial Curtain Loading Animation with Masked Logo */}
-      <PageLoader />
-
       {/* Sticky Staff Mode Admin Bar when logged in */}
       <StaffAdminBar />
 
