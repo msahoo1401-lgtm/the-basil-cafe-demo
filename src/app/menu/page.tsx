@@ -22,7 +22,7 @@ const FILTER_TABS: { id: FilterTab; label: string }[] = [
   { id: "desserts", label: "Desserts" },
 ];
 
-const PRESET_TAGS = ["Bestseller", "Most Liked", "Chef's Special", "Vegan"];
+const PRESET_TAGS = ["Bestseller", "Most Liked", "Chef's Special"];
 
 function PushMenuCard({
   item,
@@ -257,7 +257,6 @@ export default function MenuPage() {
   } = useCafeState();
 
   const [activeTab, setActiveTab] = useState<FilterTab>("all");
-  const [veganOnly, setVeganOnly] = useState(false);
 
   const categoriesToRender = useMemo(() => {
     const cats: { id: string; title: string; subtitle: string; filter: (item: MenuItem) => boolean }[] = [
@@ -354,7 +353,7 @@ export default function MenuPage() {
         {/* Title */}
         <div className="text-center max-w-2xl mx-auto mb-6">
           <p className="text-xs uppercase tracking-[0.25em] text-[#C86446] font-semibold mb-2">
-            100% PURE VEGETARIAN &amp; VEGAN KITCHEN
+            100% PURE VEGETARIAN KITCHEN
           </p>
           <h1
             className="text-3xl md:text-5xl font-bold text-[#1B3B2B] mb-3"
@@ -398,27 +397,12 @@ export default function MenuPage() {
               {tab.label}
             </button>
           ))}
-
-          {/* Vegan Only Toggle */}
-          <button
-            onClick={() => setVeganOnly((prev) => !prev)}
-            className={`flex-shrink-0 ml-auto text-xs sm:text-sm font-semibold px-4 py-2 rounded-full border transition cursor-pointer whitespace-nowrap ${
-              veganOnly
-                ? "bg-[#1B3B2B] text-[#F6F3EC] border-[#1B3B2B]"
-                : "bg-white text-[#5A635D] border-[#1B3B2B]/15 hover:border-[#1B3B2B]/35 hover:text-[#1B3B2B]"
-            }`}
-          >
-            Vegan Only
-          </button>
         </div>
 
         {/* Category Sections with Flex-Push Hover Rows */}
         <div className="space-y-12">
           {categoriesToRender.map((category) => {
-            let catItems = menuItems.filter(category.filter);
-            if (veganOnly) {
-              catItems = catItems.filter((i) => i.isVegan);
-            }
+            const catItems = menuItems.filter(category.filter);
 
             if (catItems.length === 0) return null;
 

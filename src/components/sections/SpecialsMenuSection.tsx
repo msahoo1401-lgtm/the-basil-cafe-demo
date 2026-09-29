@@ -15,7 +15,7 @@ const SPECIALS_IDS = new Set([
   "crispy-french-fries",
 ]);
 
-const PRESET_TAGS = ["Bestseller", "Most Liked", "Chef's Special", "Vegan"];
+const PRESET_TAGS = ["Bestseller", "Most Liked", "Chef's Special"];
 
 export default function SpecialsMenuSection() {
   const {

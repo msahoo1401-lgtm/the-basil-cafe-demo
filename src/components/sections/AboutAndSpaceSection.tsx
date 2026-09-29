@@ -25,7 +25,7 @@ export default function AboutAndSpaceSection() {
             A green, pet-friendly sanctuary built around music and comfort food.
           </h2>
           <p className="text-[#5A635D] text-base leading-relaxed mb-6">
-            Our kitchen is 100% vegetarian and vegan-friendly &mdash; every dish, from the mushroom
+            Our kitchen is 100% pure vegetarian &mdash; every dish, from the mushroom
             stroganoff to the wood-fired margherita pizza, is prepared fresh to order. Most weekends
             include acoustic jam sessions in the singing area and Mandala and Lippan art workshops
             on the activity floor. Radha and Rani, our two resident dogs, usually roam between the

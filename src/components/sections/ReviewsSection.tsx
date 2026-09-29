@@ -170,7 +170,7 @@ export default function ReviewsSection() {
 
       {/* Auto-advancing review slider with smooth horizontal rolling track */}
       <div
-        className="relative flex items-center justify-center"
+        className="relative w-full max-w-3xl mx-auto px-2 sm:px-12"
         onMouseEnter={() => setIsPaused(true)}
         onMouseLeave={() => setIsPaused(false)}
       >
@@ -178,7 +178,7 @@ export default function ReviewsSection() {
         <button
           onClick={prev}
           aria-label="Previous review"
-          className="w-11 h-11 rounded-full bg-white border border-[#1B3B2B]/15 flex items-center justify-center shadow-sm hover:bg-[#E9EFEA] transition cursor-pointer flex-shrink-0 z-10"
+          className="absolute left-0 sm:left-1 top-1/2 -translate-y-1/2 z-20 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-white border border-[#1B3B2B]/15 flex items-center justify-center shadow-md hover:bg-[#E9EFEA] transition cursor-pointer"
         >
           <svg
             viewBox="0 0 24 24"
@@ -187,7 +187,7 @@ export default function ReviewsSection() {
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
-            className="w-5 h-5"
+            className="w-4 h-4 sm:w-5 sm:h-5"
           >
             <path d="M15 18l-6-6 6-6" />
           </svg>
@@ -195,7 +195,7 @@ export default function ReviewsSection() {
 
         {/* Overflow-hidden viewport container */}
         <div
-          className="overflow-hidden w-full max-w-2xl mx-4 rounded-2xl"
+          className="overflow-hidden w-full rounded-2xl"
           onTouchStart={handleTouchStart}
           onTouchEnd={handleTouchEnd}
         >
@@ -209,14 +209,14 @@ export default function ReviewsSection() {
               return (
                 <div
                   key={idx}
-                  className={`w-full flex-shrink-0 bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-[#1B3B2B]/10 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                  className={`w-full flex-shrink-0 bg-white rounded-2xl p-5 sm:p-7 shadow-sm border border-[#1B3B2B]/10 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
                     isActive ? "opacity-100 scale-100" : "opacity-40 scale-95"
                   }`}
                 >
                   {/* Reviewer info */}
-                  <div className="flex items-center gap-3 mb-5">
+                  <div className="flex items-center gap-3 mb-3">
                     <div
-                      className="w-10 h-10 rounded-full flex items-center justify-center text-white text-sm font-bold flex-shrink-0"
+                      className="w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center text-white text-xs sm:text-sm font-bold flex-shrink-0"
                       style={{ backgroundColor: r.avatarColor }}
                     >
                       {r.initial}
@@ -228,7 +228,7 @@ export default function ReviewsSection() {
                   </div>
 
                   {/* Review text */}
-                  <p className="text-base md:text-lg text-[#222623] my-5 leading-relaxed min-h-[4.5rem]">
+                  <p className="text-sm sm:text-base text-[#222623] my-3 leading-relaxed min-h-[3.5rem]">
                     &ldquo;{r.text}&rdquo;
                   </p>
 
@@ -247,7 +247,7 @@ export default function ReviewsSection() {
         <button
           onClick={next}
           aria-label="Next review"
-          className="w-11 h-11 rounded-full bg-white border border-[#1B3B2B]/15 flex items-center justify-center shadow-sm hover:bg-[#E9EFEA] transition cursor-pointer flex-shrink-0 z-10"
+          className="absolute right-0 sm:right-1 top-1/2 -translate-y-1/2 z-20 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-white border border-[#1B3B2B]/15 flex items-center justify-center shadow-md hover:bg-[#E9EFEA] transition cursor-pointer"
         >
           <svg
             viewBox="0 0 24 24"
@@ -256,7 +256,7 @@ export default function ReviewsSection() {
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
-            className="w-5 h-5"
+            className="w-4 h-4 sm:w-5 sm:h-5"
           >
             <path d="M9 18l6-6-6-6" />
           </svg>

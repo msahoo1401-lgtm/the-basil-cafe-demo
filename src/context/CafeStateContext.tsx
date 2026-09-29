@@ -143,7 +143,6 @@ export function CafeStateProvider({ children }: { children: ReactNode }) {
           ...item,
           tags: newTags,
           isBestseller: tag === "Bestseller" ? !exists : item.isBestseller,
-          isVegan: tag === "Vegan" ? !exists : item.isVegan,
         };
       })
     );

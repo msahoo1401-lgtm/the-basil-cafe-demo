@@ -19,9 +19,9 @@ const plusJakartaSans = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "The Basil Cafe & Restro | 100% Pure Veg & Vegan Cafe in Kalinganagar, Bhubaneswar",
+  title: "The Basil Cafe & Restro | Pure Veg Cafe in Kalinganagar, Bhubaneswar",
   description:
-    "100% pure vegetarian and vegan-friendly botanical cafe in Ghatikia, Kalinganagar, Bhubaneswar. Wood-fired pizzas, slow-simmered pastas, specialty coffee, board games, and weekend art workshops.",
+    "100% pure vegetarian botanical cafe in Ghatikia, Kalinganagar, Bhubaneswar. Wood-fired pizzas, slow-simmered pastas, specialty coffee, board games, and weekend art workshops.",
   robots: "noindex, nofollow",
   icons: {
     icon: "/brand_icon.png",

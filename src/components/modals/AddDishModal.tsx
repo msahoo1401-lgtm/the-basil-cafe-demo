@@ -16,7 +16,7 @@ const PRESET_IMAGES = [
   { label: "Belgian Chocolate", path: "/images/foodings/meal.png" },
 ];
 
-const PRESET_TAG_OPTIONS = ["Bestseller", "Most Liked", "Chef's Special", "Vegan", "New"];
+const PRESET_TAG_OPTIONS = ["Bestseller", "Most Liked", "Chef's Special", "New"];
 
 export default function AddDishModal() {
   const { addDishModalOpen, setAddDishModalOpen, addMenuItem } = useCafeState();
@@ -70,7 +70,6 @@ export default function AddDishModal() {
       price: numPrice,
       description: description.trim() || "Freshly prepared in our Kalinganagar kitchen.",
       image: imagePreview,
-      isVegan: selectedTags.includes("Vegan"),
       isBestseller: selectedTags.includes("Bestseller"),
       inStock: true,
       tags: selectedTags,

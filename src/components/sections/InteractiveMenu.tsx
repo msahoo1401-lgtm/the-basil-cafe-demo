@@ -81,11 +81,6 @@ function MenuCard({
               Bestseller
             </span>
           )}
-          {item.isVegan && (
-            <span className="inline-flex items-center gap-1 bg-[#1B3B2B]/10 text-[#1B3B2B] text-[11px] font-semibold px-2 py-0.5 rounded-full">
-              Vegan
-            </span>
-          )}
           {!item.inStock && (
             <span className="inline-flex items-center gap-1 bg-red-100 text-red-800 text-[11px] font-semibold px-2 py-0.5 rounded-full">
               Sold Out Today
@@ -131,15 +126,13 @@ function MenuCard({
 export default function InteractiveMenu() {
   const { menuItems, isOwnerMode, toggleItemStock, updateItemPrice } = useCafeState();
   const [activeTab, setActiveTab] = useState<FilterTab>("bestsellers");
-  const [veganOnly, setVeganOnly] = useState(false);
 
   const filtered = useMemo(() => {
     let items = menuItems;
     if (activeTab === "bestsellers") items = items.filter((i) => i.isBestseller);
     else if (activeTab !== "all") items = items.filter((i) => i.category === activeTab);
-    if (veganOnly) items = items.filter((i) => i.isVegan);
     return items;
-  }, [menuItems, activeTab, veganOnly]);
+  }, [menuItems, activeTab]);
 
   return (
     <section id="menu" className="max-w-6xl mx-auto px-4 py-12">
@@ -172,25 +165,13 @@ export default function InteractiveMenu() {
             {label}
           </button>
         ))}
-
-        {/* Vegan-only toggle */}
-        <button
-          onClick={() => setVeganOnly((v) => !v)}
-          className={`flex-shrink-0 ml-auto text-xs sm:text-sm font-semibold px-4 py-2 rounded-full border transition-colors cursor-pointer whitespace-nowrap ${
-            veganOnly
-              ? "bg-[#1B3B2B] text-[#F6F3EC] border-[#1B3B2B]"
-              : "bg-transparent text-[#5A635D] border-[#1B3B2B]/20 hover:border-[#1B3B2B]/40 hover:text-[#1B3B2B]"
-          }`}
-        >
-          Vegan Only
-        </button>
       </div>
 
       {/* Dish grid */}
       {filtered.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-16 text-center text-[#5A635D]">
           <p className="font-semibold text-[#1B3B2B] mb-1">No dishes match this filter</p>
-          <p className="text-sm">Try switching to a different category or removing Vegan Only.</p>
+          <p className="text-sm">Try switching to a different category.</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

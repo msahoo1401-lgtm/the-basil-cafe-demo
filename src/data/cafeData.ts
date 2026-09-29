@@ -7,7 +7,6 @@ export interface MenuItem {
   price: number;
   description: string;
   image?: string;
-  isVegan: boolean;
   isBestseller: boolean;
   inStock: boolean;
   tags: string[];
@@ -64,7 +63,7 @@ export const INTERIOR_IMAGES = {
 
 export const CAFE_INFO: CafeInfo = {
   name: "The Basil Cafe & Restro",
-  tagline: "100% Pure Vegetarian & Vegan-Friendly Botanical Cafe",
+  tagline: "100% Pure Vegetarian Botanical Cafe",
   address: "Plot K7/92, Ghatikia, Shankarpur, Kalinganagar, Bhubaneswar 751029",
   landmarkNote:
     "First-floor sunlit space above K7 main road. Two-wheeler & street car parking available right outside.",
@@ -85,7 +84,6 @@ export const INITIAL_MENU: MenuItem[] = [
     description:
       "Double shot of espresso, steamed whole milk, and dense micro-foam dusted with unsweetened cocoa powder.",
     image: "/images/foodings/cappuccino coffee.jpg",
-    isVegan: false,
     isBestseller: false,
     inStock: true,
     tags: ["Bestseller", "Barista Choice"],
@@ -98,7 +96,6 @@ export const INITIAL_MENU: MenuItem[] = [
     description:
       "Penne tossed in slow-simmered button mushroom cream sauce, cracked black pepper, garlic, and fresh basil leaves.",
     image: "/images/foodings/mushroom creamy pasta.jpg",
-    isVegan: false,
     isBestseller: true,
     inStock: true,
     tags: ["Bestseller", "Most Liked"],
@@ -111,7 +108,6 @@ export const INITIAL_MENU: MenuItem[] = [
     description:
       "Hand-stretched sourdough crust, crushed San Marzano tomato sauce, fresh buffalo mozzarella, extra virgin olive oil, and torn basil.",
     image: "/images/foodings/margherita pizza.jpg",
-    isVegan: false,
     isBestseller: true,
     inStock: true,
     tags: ["Bestseller", "Wood-Fired"],
@@ -124,10 +120,9 @@ export const INITIAL_MENU: MenuItem[] = [
     description:
       "Double-fried skin-on potato batons tossed in sea salt and crushed rosemary, served with house garlic mayonnaise.",
     image: "/images/foodings/french fries.jpg",
-    isVegan: true,
     isBestseller: false,
     inStock: true,
-    tags: ["Vegan", "Quick Bite"],
+    tags: ["Quick Bite"],
   },
   {
     id: "mushroom-stroganoff",
@@ -137,7 +132,6 @@ export const INITIAL_MENU: MenuItem[] = [
     description:
       "Sautéed button mushrooms and caramelized onions in a rich sour cream and paprika reduction, served alongside warm parsley butter rice.",
     image: "/images/foodings/Mushroom Stroganoff.jpg",
-    isVegan: false,
     isBestseller: true,
     inStock: true,
     tags: ["Bestseller", "Chef's Special"],
@@ -150,7 +144,6 @@ export const INITIAL_MENU: MenuItem[] = [
     description:
       "Layered cucumber, ripe tomato slices, bell peppers, mint coriander chutney, and mild cheddar grilled crisp on multi-grain bread.",
     image: "/images/foodings/sandwich.jpg",
-    isVegan: false,
     isBestseller: false,
     inStock: true,
     tags: ["Most Liked", "Comfort Food"],
@@ -163,10 +156,9 @@ export const INITIAL_MENU: MenuItem[] = [
     description:
       "Seasoned sushi rice wrapped in toasted nori, stuffed with pan-seared sesame tofu, cucumber strips, avocado, and drizzled with sweet soy glaze.",
     image: "/images/foodings/tofu tanuki umaki.jpg",
-    isVegan: true,
     isBestseller: false,
     inStock: true,
-    tags: ["Vegan", "Chef's Special"],
+    tags: ["Chef's Special"],
   },
   {
     id: "hot-chocolate",
@@ -176,7 +168,6 @@ export const INITIAL_MENU: MenuItem[] = [
     description:
       "Single-origin 54% dark chocolate melted into warm whole milk, topped with toasted house marshmallow fluff.",
     image: "/images/foodings/meal.png",
-    isVegan: false,
     isBestseller: false,
     inStock: true,
     tags: ["Most Liked", "Sweet Tooth"],
@@ -189,10 +180,9 @@ export const INITIAL_MENU: MenuItem[] = [
     description:
       "Coarsely ground Chikmagalur Arabica beans steeped in chilled filtered water for 18 hours, poured over clear ice.",
     image: "/images/foodings/coffee.png",
-    isVegan: true,
     isBestseller: true,
     inStock: true,
-    tags: ["Bestseller", "Vegan", "18-Hour Steep"],
+    tags: ["Bestseller", "18-Hour Steep"],
   },
   {
     id: "garlic-bread",
@@ -201,7 +191,6 @@ export const INITIAL_MENU: MenuItem[] = [
     price: 190,
     description:
       "Toasted sourdough baguette slices brushed with roasted garlic butter, fresh parsley, and melted whole-milk mozzarella.",
-    isVegan: false,
     isBestseller: false,
     inStock: true,
     tags: ["Most Liked", "Starter"],
@@ -213,7 +202,6 @@ export const INITIAL_MENU: MenuItem[] = [
     price: 320,
     description:
       "Fusilli tossed in fresh Genovese basil pesto, roasted pine nuts, extra virgin olive oil, and shaved parmesan.",
-    isVegan: false,
     isBestseller: false,
     inStock: true,
     tags: ["Chef's Special", "Herb Garden"],
@@ -225,7 +213,6 @@ export const INITIAL_MENU: MenuItem[] = [
     price: 260,
     description:
       "House spiced potato, pea, and carrot patty on a toasted brioche bun with pickled gherkins, shredded lettuce, and tangy tomato relish.",
-    isVegan: false,
     isBestseller: false,
     inStock: true,
     tags: ["Most Liked"],
@@ -238,7 +225,6 @@ export const INITIAL_MENU: MenuItem[] = [
     description:
       "Dense Belgian dark chocolate fudge brownie with roasted walnuts, served warm with Madagascar vanilla bean gelato.",
     image: "/images/foodings/meal.png",
-    isVegan: false,
     isBestseller: true,
     inStock: true,
     tags: ["Bestseller", "Hot Dessert"],
@@ -251,10 +237,9 @@ export const INITIAL_MENU: MenuItem[] = [
     description:
       "Whole Egyptian chamomile flowers blended with dried spearmint and lemongrass, served hot in an infusion pot with wild raw honey on the side.",
     image: "/images/foodings/coffee.png",
-    isVegan: true,
     isBestseller: false,
     inStock: true,
-    tags: ["Vegan", "Caffeine-Free"],
+    tags: ["Caffeine-Free"],
   },
 ];
 

@@ -21,7 +21,7 @@ export default function HeroSection() {
       <div className="absolute inset-0 bg-gradient-to-b from-black/65 via-black/45 to-black/75" />
       <div className="relative z-10 max-w-4xl mx-auto px-4 text-center pt-16">
         <p className="text-xs md:text-sm tracking-[0.3em] uppercase text-[#F6F3EC]/90 font-medium mb-4">
-          100% Pure Vegetarian &amp; Vegan &bull; Kalinganagar
+          100% Pure Vegetarian &bull; Kalinganagar
         </p>
         <h1
           className="text-4xl sm:text-6xl md:text-7xl text-[#F6F3EC] font-semibold leading-[1.08] mb-8"

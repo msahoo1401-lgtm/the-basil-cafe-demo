@@ -7,30 +7,8 @@ export default function LocationAndHoursSection() {
   return (
     <section id="location" className="max-w-6xl mx-auto px-4 py-16 md:py-24">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
-        {/* Left Column (5 cols) */}
-        <div className="lg:col-span-5 flex flex-col">
-          <div className="aspect-[4/5] w-full rounded-3xl overflow-hidden shadow-md mb-6 bg-[#E9EFEA]">
-            <img
-              src={INTERIOR_IMAGES.sideWindowView}
-              alt="Sunlit seating by the window at The Basil Cafe"
-              className="w-full h-full object-cover"
-            />
-          </div>
-          <div>
-            <div className="mb-2">
-              <BrandWordmark variant="dark" className="h-8 sm:h-9 w-auto" />
-            </div>
-            <p className="text-sm text-[#5A635D] leading-relaxed">
-              {CAFE_INFO.address}, Odisha
-            </p>
-            <p className="text-xs text-[#5A635D]/80 mt-1">
-              {CAFE_INFO.landmarkNote}
-            </p>
-          </div>
-        </div>
-
-        {/* Right Column (7 cols) */}
-        <div className="lg:col-span-7 flex flex-col">
+        {/* 1. Header, Hours, Preview & Map (Top on mobile, Right column on desktop) */}
+        <div className="lg:col-span-7 flex flex-col order-1 lg:order-2">
           <p
             className="text-[#C86446] text-lg mb-1 italic"
             style={{ fontFamily: "var(--font-serif)" }}
@@ -57,7 +35,7 @@ export default function LocationAndHoursSection() {
           </ul>
 
           {/* Horizontal row with secondary preview image + compact Google Map on desktop */}
-          <div className="flex flex-row items-center gap-5 mb-8">
+          <div className="flex flex-row items-center gap-5 mb-2 lg:mb-0">
             <div className="w-60 h-36 sm:w-64 sm:h-40 rounded-2xl overflow-hidden shadow-sm flex-shrink-0 bg-[#E9EFEA]">
               <img
                 src={INTERIOR_IMAGES.reception}
@@ -75,31 +53,53 @@ export default function LocationAndHoursSection() {
               />
             </div>
           </div>
+        </div>
 
-          {/* Primary Action Button */}
-          <div>
-            <a
-              href="https://maps.app.goo.gl/ZXQBdMExMKxirjed9"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-[#1B3B2B] text-[#F6F3EC] hover:bg-[#2a543f] px-8 py-3.5 rounded-full text-sm font-semibold transition shadow-sm"
-            >
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="w-4 h-4"
-                aria-hidden
-              >
-                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
-                <circle cx="12" cy="10" r="3" />
-              </svg>
-              <span>Location</span>
-            </a>
+        {/* 2. Interior Photo & Address (Below header on mobile, Left column on desktop) */}
+        <div className="lg:col-span-5 flex flex-col order-2 lg:order-1">
+          <div className="aspect-[4/3] sm:aspect-[4/5] w-full rounded-3xl overflow-hidden shadow-md mb-5 bg-[#E9EFEA]">
+            <img
+              src={INTERIOR_IMAGES.sideWindowView}
+              alt="Sunlit seating by the window at The Basil Cafe"
+              className="w-full h-full object-cover"
+            />
           </div>
+          <div>
+            <div className="mb-2">
+              <BrandWordmark variant="dark" className="h-8 sm:h-9 w-auto" />
+            </div>
+            <p className="text-sm text-[#5A635D] leading-relaxed">
+              {CAFE_INFO.address}, Odisha
+            </p>
+            <p className="text-xs text-[#5A635D]/80 mt-1">
+              {CAFE_INFO.landmarkNote}
+            </p>
+          </div>
+        </div>
+
+        {/* 3. Centered Location Button at the end of the section */}
+        <div className="w-full flex justify-center mt-8 lg:col-span-12 order-3">
+          <a
+            href={CAFE_INFO.googleMapsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 bg-[#1B3B2B] text-[#F6F3EC] hover:bg-[#2a543f] px-8 py-3.5 rounded-full text-sm font-semibold transition shadow-sm"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="w-4 h-4"
+              aria-hidden
+            >
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+              <circle cx="12" cy="10" r="3" />
+            </svg>
+            <span>Location</span>
+          </a>
         </div>
       </div>
     </section>
