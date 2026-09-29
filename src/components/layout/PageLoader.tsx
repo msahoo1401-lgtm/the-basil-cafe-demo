@@ -36,7 +36,7 @@ export default function PageLoader() {
       {/* Pulsing circular masked logo */}
       <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-full overflow-hidden flex-shrink-0 border border-[#F6F3EC]/20 shadow-2xl animate-pulse">
         <img
-          src="/images/logo.jpg"
+          src="/images/brand_icon.png"
           alt="The Basil Cafe & Restro"
           className="w-full h-full object-cover scale-[1.05]"
         />

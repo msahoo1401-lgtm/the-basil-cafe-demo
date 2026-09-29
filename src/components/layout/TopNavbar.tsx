@@ -27,7 +27,7 @@ export default function TopNavbar() {
         <Link href="/" className="flex items-center gap-2.5 sm:gap-3 group">
           <div className="w-10 h-10 md:w-11 md:h-11 rounded-full overflow-hidden flex-shrink-0 border border-[#1B3B2B]/15 shadow-sm bg-[#84BE38]">
             <img
-              src="/images/logo.jpg"
+              src="/images/brand_icon.png"
               alt="The Basil Cafe & Restro"
               className="w-full h-full object-cover scale-[1.05]"
             />

@@ -139,8 +139,6 @@ export default function ReviewsSection() {
     }
   }
 
-  const review = REVIEWS[currentIndex];
-
   return (
     <section id="reviews" className="max-w-5xl mx-auto px-4 py-16 md:py-24">
       <h2
@@ -170,7 +168,7 @@ export default function ReviewsSection() {
         </a>
       </div>
 
-      {/* Auto-advancing review slider */}
+      {/* Auto-advancing review slider with smooth horizontal rolling track */}
       <div
         className="relative flex items-center justify-center"
         onMouseEnter={() => setIsPaused(true)}
@@ -180,7 +178,7 @@ export default function ReviewsSection() {
         <button
           onClick={prev}
           aria-label="Previous review"
-          className="w-11 h-11 rounded-full bg-white border border-[#1B3B2B]/15 flex items-center justify-center shadow-sm hover:bg-[#E9EFEA] transition cursor-pointer flex-shrink-0"
+          className="w-11 h-11 rounded-full bg-white border border-[#1B3B2B]/15 flex items-center justify-center shadow-sm hover:bg-[#E9EFEA] transition cursor-pointer flex-shrink-0 z-10"
         >
           <svg
             viewBox="0 0 24 24"
@@ -195,35 +193,53 @@ export default function ReviewsSection() {
           </svg>
         </button>
 
-        {/* Center Review card with smooth transition */}
+        {/* Overflow-hidden viewport container */}
         <div
-          className="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-[#1B3B2B]/10 max-w-2xl w-full mx-4 transition-all duration-500 ease-out"
+          className="overflow-hidden w-full max-w-2xl mx-4 rounded-2xl"
           onTouchStart={handleTouchStart}
           onTouchEnd={handleTouchEnd}
         >
-          {/* Reviewer info */}
-          <div className="flex items-center gap-3 mb-5">
-            <div
-              className="w-10 h-10 rounded-full flex items-center justify-center text-white text-sm font-bold flex-shrink-0"
-              style={{ backgroundColor: review.avatarColor }}
-            >
-              {review.initial}
-            </div>
-            <div>
-              <p className="font-bold text-[#222623] text-sm">{review.author}</p>
-              <p className="text-xs text-[#5A635D]">{review.timeAgo}</p>
-            </div>
-          </div>
+          {/* Horizontal sliding track */}
+          <div
+            className="flex transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]"
+            style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+          >
+            {REVIEWS.map((r, idx) => {
+              const isActive = idx === currentIndex;
+              return (
+                <div
+                  key={idx}
+                  className={`w-full flex-shrink-0 bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-[#1B3B2B]/10 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                    isActive ? "opacity-100 scale-100" : "opacity-40 scale-95"
+                  }`}
+                >
+                  {/* Reviewer info */}
+                  <div className="flex items-center gap-3 mb-5">
+                    <div
+                      className="w-10 h-10 rounded-full flex items-center justify-center text-white text-sm font-bold flex-shrink-0"
+                      style={{ backgroundColor: r.avatarColor }}
+                    >
+                      {r.initial}
+                    </div>
+                    <div>
+                      <p className="font-bold text-[#222623] text-sm">{r.author}</p>
+                      <p className="text-xs text-[#5A635D]">{r.timeAgo}</p>
+                    </div>
+                  </div>
 
-          {/* Review text */}
-          <p className="text-base md:text-lg text-[#222623] my-5 leading-relaxed min-h-[4.5rem]">
-            &ldquo;{review.text}&rdquo;
-          </p>
+                  {/* Review text */}
+                  <p className="text-base md:text-lg text-[#222623] my-5 leading-relaxed min-h-[4.5rem]">
+                    &ldquo;{r.text}&rdquo;
+                  </p>
 
-          {/* Bottom row: stars + Google icon */}
-          <div className="flex items-center justify-between pt-2">
-            <FiveStars />
-            <GoogleGIcon />
+                  {/* Bottom row: stars + Google icon */}
+                  <div className="flex items-center justify-between pt-2">
+                    <FiveStars />
+                    <GoogleGIcon />
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
 
@@ -231,7 +247,7 @@ export default function ReviewsSection() {
         <button
           onClick={next}
           aria-label="Next review"
-          className="w-11 h-11 rounded-full bg-white border border-[#1B3B2B]/15 flex items-center justify-center shadow-sm hover:bg-[#E9EFEA] transition cursor-pointer flex-shrink-0"
+          className="w-11 h-11 rounded-full bg-white border border-[#1B3B2B]/15 flex items-center justify-center shadow-sm hover:bg-[#E9EFEA] transition cursor-pointer flex-shrink-0 z-10"
         >
           <svg
             viewBox="0 0 24 24"

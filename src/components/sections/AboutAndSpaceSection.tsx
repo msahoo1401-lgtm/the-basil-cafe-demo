@@ -70,39 +70,39 @@ export default function AboutAndSpaceSection() {
 
         {/* ── Right Column — Space Photo Grid ── */}
         <div id="space" className="lg:col-span-7 grid grid-cols-2 gap-3">
-          {/* Top: bookshelf / seating — spans both columns */}
+          {/* Top: Front Door Welcome — spans both columns */}
           <div className="col-span-2 relative rounded-2xl overflow-hidden h-56 sm:h-64 lg:h-72">
             <img
-              src={INTERIOR_IMAGES.bookStand}
-              alt="Bookshelf and reading corner at The Basil Cafe"
+              src={INTERIOR_IMAGES.frontDoor}
+              alt="Front door welcome at The Basil Cafe"
               className="w-full h-full object-cover"
             />
             <span className="absolute bottom-3 left-3 bg-[#F6F3EC]/90 backdrop-blur-sm text-[#1B3B2B] text-[11px] font-semibold px-2.5 py-1 rounded-lg">
-              Book corner &amp; seating
+              Front Door Welcome
             </span>
           </div>
 
-          {/* Bottom left: Radha & Rani */}
+          {/* Bottom left: Sunlit Window View */}
           <div className="relative rounded-2xl overflow-hidden h-40 sm:h-48">
             <img
-              src={INTERIOR_IMAGES.radhaAndRani}
-              alt="Radha and Rani, the resident dogs at The Basil Cafe"
+              src={INTERIOR_IMAGES.windowView}
+              alt="Sunlit window seating at The Basil Cafe"
               className="w-full h-full object-cover"
             />
             <span className="absolute bottom-2 left-2 bg-[#F6F3EC]/90 backdrop-blur-sm text-[#1B3B2B] text-[10px] font-semibold px-2 py-0.5 rounded-lg">
-              Radha &amp; Rani
+              Sunlit Window View
             </span>
           </div>
 
-          {/* Bottom right: Entrance */}
+          {/* Bottom right: Cozy Middle Seating Area */}
           <div className="relative rounded-2xl overflow-hidden h-40 sm:h-48">
             <img
-              src={INTERIOR_IMAGES.entrance}
-              alt="First-floor entrance to The Basil Cafe"
+              src={INTERIOR_IMAGES.middleArea}
+              alt="Cozy middle seating area at The Basil Cafe"
               className="w-full h-full object-cover"
             />
             <span className="absolute bottom-2 left-2 bg-[#F6F3EC]/90 backdrop-blur-sm text-[#1B3B2B] text-[10px] font-semibold px-2 py-0.5 rounded-lg">
-              First-floor entrance
+              Cozy Middle Seating Area
             </span>
           </div>
         </div>

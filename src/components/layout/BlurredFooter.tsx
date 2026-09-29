@@ -23,7 +23,7 @@ export default function BlurredFooter() {
         {/* Circular masked official logo */}
         <div className="w-16 h-16 rounded-full overflow-hidden flex-shrink-0 border border-[#F6F3EC]/20 mb-4 shadow-lg bg-[#84BE38]">
           <img
-            src="/images/logo.jpg"
+            src="/images/brand_icon.png"
             alt="The Basil Cafe & Restro"
             className="w-full h-full object-cover scale-[1.05]"
           />

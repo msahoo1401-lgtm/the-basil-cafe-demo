@@ -81,17 +81,11 @@ function CounterCell({
   return (
     <div className={`flex flex-col items-center justify-center py-8 md:py-10 px-4 ${borderClasses}`}>
       <div className="flex items-baseline mb-2">
-        <span
-          className="text-4xl md:text-5xl text-[#C86446] font-semibold tabular-nums"
-          style={{ fontFamily: "var(--font-serif)" }}
-        >
+        <span className="font-sans font-light tracking-tight text-4xl md:text-6xl text-[#1B3B2B] tabular-nums">
           {displayValue}
         </span>
         {data.suffix && (
-          <span
-            className="text-2xl md:text-3xl text-[#C86446] font-semibold ml-0.5"
-            style={{ fontFamily: "var(--font-serif)" }}
-          >
+          <span className="text-2xl md:text-3xl font-normal text-[#C86446] ml-0.5">
             {data.suffix}
           </span>
         )}

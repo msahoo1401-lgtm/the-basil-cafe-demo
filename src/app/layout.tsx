@@ -22,6 +22,11 @@ export const metadata: Metadata = {
   description:
     "100% pure vegetarian and vegan-friendly botanical cafe in Ghatikia, Kalinganagar, Bhubaneswar. Wood-fired pizzas, slow-simmered pastas, specialty coffee, board games, and weekend art workshops.",
   robots: "noindex, nofollow",
+  icons: {
+    icon: "/brand_icon.png",
+    shortcut: "/brand_icon.png",
+    apple: "/brand_icon.png",
+  },
 };
 
 export default function RootLayout({

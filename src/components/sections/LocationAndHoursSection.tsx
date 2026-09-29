@@ -56,13 +56,24 @@ export default function LocationAndHoursSection() {
             <li>Sat &ndash; Sun: 8:30 am &ndash; 11:30 pm</li>
           </ul>
 
-          {/* Secondary horizontal preview image */}
-          <div className="w-64 h-36 rounded-2xl overflow-hidden shadow-sm mb-8 bg-[#E9EFEA]">
-            <img
-              src={INTERIOR_IMAGES.reception}
-              alt="Reception and coffee counter at The Basil Cafe"
-              className="w-full h-full object-cover"
-            />
+          {/* Horizontal row with secondary preview image + compact Google Map on desktop */}
+          <div className="flex flex-row items-center gap-5 mb-8">
+            <div className="w-60 h-36 sm:w-64 sm:h-40 rounded-2xl overflow-hidden shadow-sm flex-shrink-0 bg-[#E9EFEA]">
+              <img
+                src={INTERIOR_IMAGES.reception}
+                alt="Reception and coffee counter at The Basil Cafe"
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <div className="hidden md:block w-64 lg:w-72 h-36 sm:h-40 rounded-2xl overflow-hidden shadow-sm border border-[#1B3B2B]/15 flex-shrink-0">
+              <iframe
+                src="https://maps.google.com/maps?q=The%20Basil%20Cafe%20and%20Restro%20Kalinganagar%20Bhubaneswar&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                className="w-full h-full border-0"
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="The Basil Cafe Location Map"
+              />
+            </div>
           </div>
 
           {/* Primary Action Button */}
